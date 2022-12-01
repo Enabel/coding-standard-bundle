@@ -1,0 +1,72 @@
+{
+    "name": "enabel/coding-standard-bundle",
+    "description": "Enabel bundle that provide coding standard and dev helpers",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Damien Lagae",
+            "email": "damien.lagae@enabel.be"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "symfony/config": "^6.0",
+        "symfony/dependency-injection": "^6.0",
+        "symfony/framework-bundle": "^6.0"
+    },
+    "require-dev": {
+        "nunomaduro/phpinsights": "^2.6",
+        "phpstan/phpstan": "^1.8",
+        "phpstan/phpstan-phpunit": "^1.1",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.7",
+        "symfony/phpunit-bridge": "^6.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Enabel\\CodingStandardBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Enabel\\CodingStandardBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/flex": true
+        }
+    },
+    "scripts": {
+        "cs": "vendor/bin/phpcs --standard=PSR12 --parallel=4 --ignore=vendor,var .",
+        "cs-fix": "vendor/bin/phpcbf --standard=PSR12 --parallel=4 --ignore=vendor,var .",
+        "fix": [
+            "@cs-fix",
+            "@insight-fix"
+        ],
+        "insight": "vendor/bin/phpinsights --no-interaction",
+        "insight-fix": "vendor/bin/phpinsights --no-interaction --fix",
+        "qa": [
+            "@cs",
+            "@stan",
+            "@insight",
+            "@test"
+        ],
+        "stan": "vendor/bin/phpstan analyse -c phpstan.neon --no-interaction",
+        "test": "vendor/bin/simple-phpunit -d memory_limit=-1 --stop-on-failure --testdox"
+    },
+    "scripts-descriptions": {
+        "cs": "Run php_codesniffer with PSR12 standard",
+        "cs-fix": "Run PHP Code Beautifier",
+        "fix": "Run fixer",
+        "insight": "Run PHP Insights",
+        "insight-fix": "Run PHP Insights and fix",
+        "qa": "Run static analysis tools & test",
+        "stan": "Run PHPStan",
+        "test": "Run the PHPUnit tests"
+    }
+}
