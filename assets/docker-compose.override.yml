@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  ###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - "3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - ./docker/db/data:/var/lib/mysql:rw
+  ###< doctrine/doctrine-bundle ###
+
+  ###> symfony/mailer ###
+  mailer:
+    image: schickling/mailcatcher
+    ports: [1025, 1080]
+  ###< symfony/mailer ###
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - database
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+
+  phpqa:
+    image: jakzal/phpqa:php${PHP_VERSION:-8.1}
+    working_dir: /project
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    volumes:
+      - ./:/project
+
+  node:
+    image: node:${NODE_VERSION:-16}
+    privileged: true
+    working_dir: /project
+    volumes:
+      - ./:/project
+    ports:
+      - 8888:8080
+
+  redis:
+    image: redis
+    volumes:
+      - ./docker/redis/data:/data
+    ports:
+      - "6379"
+    healthcheck:
+      test: ["CMD", "redis-cli" ,"ping"]
+      timeout: 10s
+      retries: 10
+
+  redisinsight:
+    image: redislabs/redisinsight
+    ports:
+      - 8001:8001
+    depends_on:
+      - redis
+    volumes:
+      - ./docker/redis/insight:/db:rw
