@@ -1,0 +1,21 @@
+includes:
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/extension.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-doctrine/rules.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/rules.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-symfony/extension.neon
+  - /tools/.composer/vendor-bin/phpstan/vendor/phpstan/phpstan-symfony/rules.neon
+
+parameters:
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+        console_application_loader: phpstan/console.php
+    doctrine:
+        objectManagerLoader: phpstan/doctrine.php
+    level: 9
+    checkGenericClassInNonGenericObjectType: false
+    paths:
+        - src
+        - tests
+    parallel:
+        maximumNumberOfProcesses: 4
