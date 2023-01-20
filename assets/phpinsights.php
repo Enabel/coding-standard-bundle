@@ -31,6 +31,7 @@ return [
         'node_modules',
         'src/Kernel.php',
         'tmp',
+        'phpstan',
         'phpinsights.php',
     ],
     'add' => [
