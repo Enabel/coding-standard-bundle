@@ -41,7 +41,7 @@
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true" cacheDirectory="var/coverage/cache">
+    <coverage processUncoveredFiles="true" cacheDirectory="var/cache/coverage">
         <include>
             <directory suffix=".php">src</directory>
         </include>
