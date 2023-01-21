@@ -61,7 +61,7 @@ security: ## Launch dependencies security check
 requirements: ## Launch symfony requirements check
 	$(SYMFONY_BIN) check:requirements
 
-ci: security lint analyze tests ## Launch the ci locally
+ci: security lint analyze test ## Launch the ci locally
 
 purge: ## Purge the dependencies
 	sudo rm -Rf vendor/
@@ -87,9 +87,6 @@ cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
 	$(SYMFONY) cache:clear --env=$(env)
 
 ## —— Symfony binary 💻 ————————————————————————————————————————————————————————
-bin-update: ## Update Symfony CLI (the binary in the project)
-	$(SYMFONY_BIN) self:update
-
 cert-install: ## Install the local HTTPS certificates
 	$(SYMFONY_BIN) server:ca:install
 
