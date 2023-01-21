@@ -13,10 +13,10 @@
         "php": "^8.0",
         "symfony/config": "^6.0",
         "symfony/dependency-injection": "^6.0",
-        "symfony/framework-bundle": "^6.0"
+        "symfony/framework-bundle": "^6.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4"
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "nunomaduro/phpinsights": "^2.6",
         "phpstan/phpstan": "^1.8",
         "phpstan/phpstan-phpunit": "^1.1",
