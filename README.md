@@ -23,7 +23,6 @@ The bundle aims to provide basics Coding Standard and helper, including:
 - ESLint (js)
 - Makefile
 - Docker (MySQL, Node, Redis, Mailcatcher, PHPQA)
-- ...
 
 ## Installation & usage
 

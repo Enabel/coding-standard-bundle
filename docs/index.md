@@ -6,10 +6,34 @@ of the Composer documentation.
 
 ## Applications that use Symfony Flex
 
+### Step 1: Download the Bundle
 Open a command console, enter your project directory and execute:
 
 ```bash
 composer require enabel/coding-standard-bundle
+```
+
+### Step 2: Download & install javascript dependencies
+
+Install the JavaScript dependencies for stylelint & eslint:
+```bash
+yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
+```
+
+### Step 3: Modify webpack config
+
+Edit `webpack.config.js` and add the following lines:
+```javascript
+Encore
+  // ...
+  .enableEslintPlugin()
+```
+
+### Step 4: Build the assets
+
+Build assets:
+```bash
+make assets
 ```
 
 ## Applications that don't use Symfony Flex
@@ -35,4 +59,48 @@ return [
     // ...
     Enabel\CodingStandardBundle\EnabelCodingStandardBundle::class => ['all' => true],
 ];
+```
+
+### Step 3: Copy assets
+
+Copy the content of the `assets` directory to your project directory
+
+```bash
+cp -R vendor/enabel/coding-standard-bundle/assets/ .
+```
+
+### Step 4: Modify your .env 
+
+Add this block in your .env file
+
+```dotenv
+###> enabel/coding-standard-bundle ###
+NODE_VERSION=16
+MYSQL_VERSION=8
+PHP_VERSION=8.1
+DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=${MYSQL_VERSION}&charset=utf8mb4"
+###< enabel/coding-standard-bundle ###
+```
+
+### Step 5: Download & install javascript dependencies
+
+Install the JavaScript dependencies for stylelint & eslint:
+```bash
+yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
+```
+
+### Step 6: Modify webpack config
+
+Edit `webpack.config.js` and add the following lines:
+```javascript
+Encore
+  // ...
+  .enableEslintPlugin()
+```
+
+### Step 7: Build the assets
+
+Build assets:
+```bash
+make assets
 ```
