@@ -75,7 +75,7 @@ return [
 Copy the content of the `assets` directory to your project directory
 
 ```bash
-cp -R vendor/enabel/coding-standard-bundle/assets/* .
+cp -pR vendor/enabel/coding-standard-bundle/assets/. .
 ```
 
 ### Step 4: Modify your .env 

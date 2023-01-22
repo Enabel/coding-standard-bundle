@@ -152,12 +152,10 @@ refactor: php-rector ## Refactor the code source with rector
 recommend: php-rector-dry ## Refactor the code source with rector dry mode
 
 php-cs: ## Run php_codesniffer with PSR12 standard
-	$(PHPQA) phpcs -v --standard=PSR12 --parallel=4 src/
-	$(PHPQA) phpcs -v --standard=PSR12 --parallel=4 tests/
+	$(PHPQA) phpcs -v
 
 php-cbf: ## Run PHP Code Beautifier and Fixer
-	$(PHPQA) phpcbf -v --standard=PSR12 --parallel=4 src/
-	$(PHPQA) phpcbf -v --standard=PSR12 --parallel=4 tests/
+	$(PHPQA) phpcbf -v
 
 php-mess: ## Run PHP Mess Detector
 	$(PHPQA) phpmd src/,tests/ ansi ./.phpmd.xml
