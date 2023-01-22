@@ -13,14 +13,23 @@ Open a command console, enter your project directory and execute:
 composer require enabel/coding-standard-bundle
 ```
 
-### Step 2: Download & install javascript dependencies
+### Step 2: Override files
+
+Copy the docker & phpunit config to your project
+
+```bash
+cp -R vendor/enabel/coding-standard-bundle/assets/docker-compose.* .
+cp -R vendor/enabel/coding-standard-bundle/assets/phpunit.xml.dist .
+```
+
+### Step 3: Download & install javascript dependencies
 
 Install the JavaScript dependencies for stylelint & eslint:
 ```bash
 yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
 ```
 
-### Step 3: Modify webpack config
+### Step 4: Modify webpack config
 
 Edit `webpack.config.js` and add the following lines:
 ```javascript
@@ -29,7 +38,7 @@ Encore
   .enableEslintPlugin()
 ```
 
-### Step 4: Build the assets
+### Step 5: Build the assets
 
 Build assets:
 ```bash
@@ -66,7 +75,7 @@ return [
 Copy the content of the `assets` directory to your project directory
 
 ```bash
-cp -R vendor/enabel/coding-standard-bundle/assets/ .
+cp -R vendor/enabel/coding-standard-bundle/assets/* .
 ```
 
 ### Step 4: Modify your .env 
