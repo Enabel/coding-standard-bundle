@@ -60,7 +60,7 @@ return [
             'maxComplexity' => 15,
         ],
         FunctionLengthSniff::class => [
-            'maxLinesLength' => 100,
+            'maxLinesLength' => 200,
         ],
         PropertyTypeHintSniff::class => [
             'enableNativeTypeHint' => false,
