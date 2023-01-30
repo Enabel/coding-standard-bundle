@@ -5,5 +5,9 @@
   ],
   "rules": {
     "scss/at-extend-no-missing-placeholder": null
-  }
+  },
+  "ignoreFiles": [
+    "**/*.js",
+    "**/*.json"
+  ]
 }

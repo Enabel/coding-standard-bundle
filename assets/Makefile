@@ -200,10 +200,10 @@ lint-twig: composer-install ## Run Twig Lint
 	$(SYMFONY) lint:twig templates
 
 lint-style: yarn-install ## Lint sass style
-	$(YARN) stylelint "assets/**/*.scss" -f tap
+	$(YARN) stylelint "assets/" -f tap
 
 lint-js: yarn-install ## Lint javascript files
-	$(YARN) eslint "assets/**/*.js" -f tap
+	$(YARN) eslint "assets/" -f tap
 
 ## —— Database 📑 ——————————————————————————————————————————————————————————————
 db-cache: ## Clear database metadata cache

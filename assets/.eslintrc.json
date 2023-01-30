@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base",
+        "prettier"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "webpack.config.js",
+                "modulesDirectory": "node_modules"
+            }
+        }
+    }
+}
