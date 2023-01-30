@@ -11,7 +11,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
         __DIR__ . '/src',
     ]);
-    $rectorConfig->symfonyContainerXml(__DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.xml');
+    $rectorConfig->symfonyContainerXml('/project/var/cache/dev/App_KernelDevDebugContainer.xml');
 
     $rectorConfig->import(SymfonySetList::SYMFONY_60);
     $rectorConfig->import(SymfonySetList::SYMFONY_CODE_QUALITY);

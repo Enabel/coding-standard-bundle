@@ -116,10 +116,10 @@ docker-phpqa-up: docker-compose.yml ## Start the phpqa container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d phpqa
 
 docker-wait-database: docker-compose.yml ## Wait for docker [database] to be ready
-	@docker/bin/wait-for-database.sh
+	@vendor/enabel/coding-standard-bundle/assets/docker/bin/wait-for-database.sh
 
 docker-wait-redis: docker-compose.yml ## Wait for docker [redis] to be ready
-	@docker/bin/wait-for-redis.sh
+	@vendor/enabel/coding-standard-bundle/assets/docker/bin/wait-for-redis.sh
 
 ## —— CI: Tests ✅ —————————————————————————————————————————————————————————————
 tests: ## Run the PHPUnit tests
@@ -152,31 +152,31 @@ refactor: php-rector ## Refactor the code source with rector
 recommend: php-rector-dry ## Refactor the code source with rector dry mode
 
 php-cs: ## Run php_codesniffer with PSR12 standard
-	$(PHPQA) phpcs -v
+	$(PHPQA) phpcs -v --standard=vendor/enabel/coding-standard-bundle/tools/phpcs.xml
 
 php-cbf: ## Run PHP Code Beautifier and Fixer
-	$(PHPQA) phpcbf -v
+	$(PHPQA) phpcbf -v --standard=vendor/enabel/coding-standard-bundle/tools/phpcs.xml
 
 php-mess: ## Run PHP Mess Detector
-	$(PHPQA) phpmd src/,tests/ ansi ./.phpmd.xml
+	$(PHPQA) phpmd src/,tests/ ansi vendor/enabel/coding-standard-bundle/tools/.phpmd.xml
 
 php-stan: ## Run PHPStan
-	$(PHPQA) phpstan analyse -c phpstan.neon --no-interaction
+	$(PHPQA) phpstan analyse -c vendor/enabel/coding-standard-bundle/tools/phpstan.neon --no-interaction
 
 php-insights: ## Run PHP Insights
-	$(PHPQA) phpinsights --no-interaction -v --flush-cache
+	$(PHPQA) phpinsights --no-interaction -v --flush-cache --config-path=vendor/enabel/coding-standard-bundle/tools/phpinsights.php
 
 php-insights-fix: ## Run PHP Insights
-	$(PHPQA) phpinsights --fix --flush-cache --no-interaction -v
+	$(PHPQA) phpinsights --fix --flush-cache --no-interaction -v --config-path=vendor/enabel/coding-standard-bundle/tools/phpinsights.php
 
 php-cpd: ## Run PHP Copy/Paste Detector
 	$(PHPQA) phpcpd --min-lines 30 src/
 
 php-rector-dry: ## Run Rector (dry) - Instant Upgrades and Automated Refactoring
-	$(PHPQA) rector process --dry-run src/
+	$(PHPQA) rector process --dry-run --config vendor/enabel/coding-standard-bundle/tools/rector.php src/
 
 php-rector: ## Run Rector - Instant Upgrades and Automated Refactoring
-	$(PHPQA) rector process src/
+	$(PHPQA) rector process  --config vendor/enabel/coding-standard-bundle/tools/rector.php src/
 
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
 lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig lint-style lint-js ## Run linters
