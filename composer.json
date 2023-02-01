@@ -14,7 +14,7 @@
         "symfony/config": "^6.0",
         "symfony/dependency-injection": "^6.0",
         "symfony/framework-bundle": "^6.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.4"
+        "symfony/webpack-encore-bundle": "^1.16"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^2.6",
