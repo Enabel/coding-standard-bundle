@@ -1,0 +1,107 @@
+grumphp:
+    git_hook_variables:
+        EXEC_GRUMPHP_COMMAND: 'symfony php'
+    parallel:
+        enabled: false
+    tasks:
+        composer:
+            file: ./composer.json
+            no_check_all: true
+        composer_normalize: ~
+        git_blacklist:
+            keywords:
+                - "die("
+                - "dd("
+                - "dump("
+                - "var_dump("
+                - "exit;"
+            regexp_type: G
+            match_word: true
+        git_branch_name:
+            whitelist:
+                - "us\/*"
+                - "sprint\/*"
+                - "hotfix\/*"
+                - "fix\/*"
+                - "main"
+            blacklist:
+                - "develop"
+                - "master"
+        php_code_sniffer:
+            make_file: ~
+            task: php-cs
+            triggered_by: [ php ]
+            metadata:
+                task: make
+        php_mess_detector:
+            make_file: ~
+            task: php-mess
+            triggered_by: [ php ]
+            metadata:
+                task: make
+        php_cpd:
+            make_file: ~
+            task: php-cpd
+            triggered_by: [ php ]
+            metadata:
+                task: make
+        php_stan:
+            make_file: ~
+            task: php-stan
+            triggered_by: [ php ]
+            metadata:
+                task: make
+        php_insight:
+            make_file: ~
+            task: php-insights
+            triggered_by: [ php ]
+            metadata:
+                task: make
+        security_checker:
+            make_file: ~
+            task: symfony-security
+            metadata:
+                task: make
+        lint_yaml:
+            make_file: ~
+            task: lint-yaml
+            triggered_by: [ yaml ]
+            metadata:
+                task: make
+        lint_xliff:
+            make_file: ~
+            task: lint-xliff
+            triggered_by: [ xlf ]
+            metadata:
+                task: make
+        lint_container:
+            make_file: ~
+            task: lint-container
+            metadata:
+                task: make
+        lint_doctrine:
+            make_file: ~
+            task: lint-doctrine
+            metadata:
+                task: make
+        lint_composer:
+            make_file: ~
+            task: lint-composer
+            metadata:
+                task: make
+        lint_twig:
+            make_file: ~
+            task: lint-twig
+            triggered_by: [ twig ]
+            metadata:
+                task: make
+        lint_style:
+            make_file: ~
+            task: lint-style
+            metadata:
+                task: make
+        lint_js:
+            make_file: ~
+            task: lint-js
+            metadata:
+                task: make
