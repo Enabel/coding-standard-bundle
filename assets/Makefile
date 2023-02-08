@@ -48,6 +48,8 @@ install-up: docker-up wait composer-install db-schema assets
 
 install: install-up docker-down ## Install requirements (create database, install php dependencies and build assets)
 
+update: docker-pull composer-update yarn-update ## Update requirements (Docker images, composer & yarn dependencies)
+
 run: install-up symfony-start ## Start docker and start the web server
 
 abort: docker-down symfony-stop ## Stop docker and the Symfony binary server
@@ -99,6 +101,9 @@ symfony-stop: ## Stop the web server
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 docker-up: docker-compose.yml ## Start the docker hub (MySQL,redis,phpmyadmin,mailcatcher)
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d
+
+docker-pull: docker-compose.yml ## Pull docker image (MySQL,redis,phpmyadmin,mailcatcher)
+	$(DOCKER_ENV) $(DOCKER_COMP) pull
 
 docker-down: docker-compose.yml ## Stop the docker hub
 	$(DOCKER_ENV) $(DOCKER_COMP) down --remove-orphans

@@ -23,7 +23,7 @@ grumphp:
                 - "sprint\/*"
                 - "hotfix\/*"
                 - "fix\/*"
-                - "main"
+                - "feat\/*"
             blacklist:
                 - "develop"
                 - "master"
@@ -71,7 +71,6 @@ grumphp:
         lint_xliff:
             make_file: ~
             task: lint-xliff
-            triggered_by: [ xlf ]
             metadata:
                 task: make
         lint_container:
