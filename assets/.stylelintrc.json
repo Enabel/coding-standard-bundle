@@ -4,7 +4,8 @@
     "stylelint-config-prettier-scss"
   ],
   "rules": {
-    "scss/at-extend-no-missing-placeholder": null
+    "scss/at-extend-no-missing-placeholder": null,
+    "color-function-notation": null
   },
   "ignoreFiles": [
     "**/*.js",

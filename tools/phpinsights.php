@@ -10,6 +10,7 @@ use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
+use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
@@ -43,6 +44,7 @@ return [
         DisallowYodaComparisonSniff::class,
         ComposerMustBeValid::class,
         SuperfluousAbstractClassNamingSniff::class,
+        SuperfluousInterfaceNamingSniff::class,
         SuperfluousTraitNamingSniff::class,
         ForbiddenSetterSniff::class,
         ForbiddenTraits::class,
