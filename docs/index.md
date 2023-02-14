@@ -6,6 +6,25 @@ of the Composer documentation.
 
 ## Applications that use Symfony Flex
 
+### Step 0: Add our recipes endpoint
+
+Add this in your composer.json:
+
+```json
+{
+  "extra": {
+    "symfony": {
+      "endpoint": [
+        "https://api.github.com/repos/Enabel/recipes/contents/index.json?ref=flex/main",
+        ...
+        "flex://defaults"
+      ],
+      "allow-contrib": true
+    }
+  }
+}
+```
+
 ### Step 1: Download the Bundle
 Open a command console, enter your project directory and execute:
 
