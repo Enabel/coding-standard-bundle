@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^8.0",
+        "ergebnis/composer-normalize": "^2.29",
         "phpro/grumphp": "^1.15",
         "symfony/config": "^6.0",
         "symfony/dependency-injection": "^6.0",
@@ -41,7 +42,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "symfony/flex": true,
-            "phpro/grumphp": true
+            "phpro/grumphp": true,
+            "ergebnis/composer-normalize": true
         }
     },
     "scripts": {
