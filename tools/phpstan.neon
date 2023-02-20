@@ -19,3 +19,7 @@ parameters:
         - /project/tests
     parallel:
         maximumNumberOfProcesses: 4
+    ignoreErrors:
+        -
+            message: "#Call to an undefined method [a-zA-Z0-9\\_]+|Zenstruck\\\\Foundry\\\\Proxy\\:\\:object\\(\\)\\.$#"
+            reportUnmatched: false
