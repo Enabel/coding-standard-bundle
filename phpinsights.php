@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
@@ -35,6 +36,7 @@ return [
         DocCommentSpacingSniff::class,
         SpaceAfterNotSniff::class,
         ForbiddenNormalClasses::class,
+        ForbiddenGlobals::class,
         UnusedParameterSniff::class,
         StaticClosureSniff::class,
         DisallowMixedTypeHintSniff::class,
