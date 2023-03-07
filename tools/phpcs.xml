@@ -16,4 +16,6 @@
     <file>/project/src/</file>
     <file>/project/tests/</file>
 
+    <exclude-pattern>/project/bin/.phpunit/*</exclude-pattern>
+
 </ruleset>

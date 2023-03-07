@@ -28,6 +28,7 @@ return [
     'preset' => 'symfony',
     'ide' => 'phpstorm',
     'exclude' => [
+        'bin/.phpunit',
         'docker',
         'assets',
         'docs',
