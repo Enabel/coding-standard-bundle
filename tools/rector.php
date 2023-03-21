@@ -13,7 +13,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     $rectorConfig->symfonyContainerXml('/project/var/cache/dev/App_KernelDevDebugContainer.xml');
 
-    $rectorConfig->import(SymfonySetList::SYMFONY_60);
+    $rectorConfig->import(SymfonySetList::SYMFONY_62);
     $rectorConfig->import(SymfonySetList::SYMFONY_CODE_QUALITY);
     $rectorConfig->import(SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES);
     $rectorConfig->import(SensiolabsSetList::FRAMEWORK_EXTRA_61);

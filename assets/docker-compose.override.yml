@@ -22,7 +22,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8080:80"
+      - "80"
     depends_on:
       - database
     environment:
@@ -43,7 +43,7 @@ services:
     volumes:
       - ./:/project
     ports:
-      - 8888:8080
+      - "8080"
 
   redis:
     image: redis
@@ -56,11 +56,12 @@ services:
       timeout: 10s
       retries: 10
 
-  redisinsight:
-    image: redislabs/redisinsight
+  phpredisadmin:
+    image: erikdubbelboer/phpredisadmin
     ports:
-      - 8001:8001
+      - "80"
     depends_on:
       - redis
-    volumes:
-      - ./docker/redis/insight:/db:rw
+    environment:
+      REDIS_1_HOST: redis
+      REDIS_1_NAME: Docker

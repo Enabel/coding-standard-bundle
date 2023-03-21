@@ -185,6 +185,7 @@ php-rector: ## Run Rector - Instant Upgrades and Automated Refactoring
 
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
 lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig lint-style lint-js ## Run linters
+fix-lint: lint-js-fix ## Try to fix the lint problem
 
 lint-yaml: composer-install ## Lint YAML files
 	$(SYMFONY) lint:yaml config --parse-tags
@@ -209,6 +210,9 @@ lint-style: yarn-install ## Lint sass style
 
 lint-js: yarn-install ## Lint javascript files
 	$(YARN) eslint "assets/" -f tap
+
+lint-js-fix: yarn-install ## Fix lint javascript files
+	$(YARN) eslint --fix "assets/"
 
 ## —— Database 📑 ——————————————————————————————————————————————————————————————
 db-cache: ## Clear database metadata cache
@@ -262,3 +266,19 @@ translation-pull: composer-install ## Get translation from remote storage [Loco]
 
 translation-push: composer-install ## Push translation to remote storage [Loco]
 	$(SYMFONY) translation:push loco
+
+## —— Tools 🧰 ———————————————————————————————————————————————————————————
+open: docker-up symfony-start ## Open the project webinterface
+	$(SYMFONY_BIN) open:local
+
+open-coverage: symfony-start ## Open coverage report
+	$(SYMFONY_BIN) open:local --path=/coverage/
+
+open-phpmyadmin: docker-up symfony-start ## Open PHPMyAdmin
+	$(SYMFONY_BIN) open:local:service phpmyadmin
+
+open-mailer: docker-up symfony-start ## Open MailCatcher
+	$(SYMFONY_BIN) open:local:webmail
+
+open-redis: docker-up symfony-start ## Open PhpRedisAdmin
+	$(SYMFONY_BIN) open:local:service phpredisadmin

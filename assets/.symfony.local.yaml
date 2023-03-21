@@ -1,0 +1,5 @@
+workers:
+    yarn_encore_watch:
+        cmd: ['make', 'yarn-watch']
+    messenger_consume_async:
+        cmd: ['symfony', 'console', 'messenger:consume', 'async']
