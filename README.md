@@ -11,6 +11,8 @@ The bundle aims to provide basics Coding Standard and helper, including:
 - PHPStan
 - PHP Insight (Symfony)
 - PHP Copy/Paste Detector
+- Rector
+- PHPLoc
 - Twig Coding Standard
 - Linter
   - Twig

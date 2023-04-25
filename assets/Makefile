@@ -183,6 +183,9 @@ php-rector-dry: ## Run Rector (dry) - Instant Upgrades and Automated Refactoring
 php-rector: ## Run Rector - Instant Upgrades and Automated Refactoring
 	$(PHPQA) rector process  --config vendor/enabel/coding-standard-bundle/tools/rector.php src/
 
+php-loc: ## Run PHPLOC - Measure the overall size of the project
+	$(PHPQA) phploc src/
+
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
 lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig lint-style lint-js ## Run linters
 fix-lint: lint-js-fix ## Try to fix the lint problem

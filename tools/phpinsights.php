@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\PhpInsights\Domain\Insights\Composer\ComposerMustBeValid;
 use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
@@ -43,10 +43,10 @@ return [
     'remove' => [
         DisallowEmptySniff::class,
         DisallowYodaComparisonSniff::class,
-        ComposerMustBeValid::class,
         SuperfluousAbstractClassNamingSniff::class,
         SuperfluousInterfaceNamingSniff::class,
         SuperfluousTraitNamingSniff::class,
+        ForbiddenDefineFunctions::class,
         ForbiddenSetterSniff::class,
         ForbiddenTraits::class,
         DocCommentSpacingSniff::class,
@@ -65,7 +65,7 @@ return [
             'ignoreComments' => true,
         ],
         CyclomaticComplexityIsHigh::class => [
-            'maxComplexity' => 15,
+            'maxComplexity' => 30,
         ],
         FunctionLengthSniff::class => [
             'maxLinesLength' => 200,
