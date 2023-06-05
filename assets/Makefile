@@ -152,7 +152,7 @@ test-ci: composer-install ## Run the PHPUnit tests
 
 ## —— CI: Coding standards ✨ ——————————————————————————————————————————————————
 analyze: php-cs php-mess php-stan php-insights ## Run static analysis tools
-fix: php-cbf php-insights-fix ## Fix coding standards
+fix: php-insights-fix php-cbf ## Fix coding standards
 refactor: php-rector ## Refactor the code source with rector
 recommend: php-rector-dry ## Refactor the code source with rector dry mode
 

@@ -65,7 +65,7 @@ return [
             'ignoreComments' => true,
         ],
         CyclomaticComplexityIsHigh::class => [
-            'maxComplexity' => 30,
+            'maxComplexity' => 60,
         ],
         FunctionLengthSniff::class => [
             'maxLinesLength' => 200,

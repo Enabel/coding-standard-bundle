@@ -1,6 +1,10 @@
 # Changelog
 
-## [1.0.15](https://github.com/enabel/coding-standard-bundle/tree/1.0.16) (2023-04-25)
+## [1.0.17](https://github.com/enabel/coding-standard-bundle/tree/1.0.17) (2023-06-05)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/1.0.16...1.0.17)
+
+## [1.0.16](https://github.com/enabel/coding-standard-bundle/tree/1.0.16) (2023-04-25)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/1.0.15...1.0.16)
 
