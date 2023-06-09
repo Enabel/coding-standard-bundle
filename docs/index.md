@@ -16,7 +16,6 @@ Add this in your composer.json:
     "symfony": {
       "endpoint": [
         "https://api.github.com/repos/Enabel/recipes/contents/index.json?ref=flex/main",
-        ...
         "flex://defaults"
       ],
       "allow-contrib": true
