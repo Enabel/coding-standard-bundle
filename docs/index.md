@@ -24,6 +24,7 @@ Add this in your composer.json:
   }
 }
 ```
+**Don't forget to run `compose update` as you have just modified his configuration.**
 
 ### Step 1: Download the Bundle
 Open a command console, enter your project directory and execute:
