@@ -18,7 +18,6 @@ parameters:
     treatPhpDocTypesAsCertain: false
     paths:
         - /project/src
-        - /project/tests
     parallel:
         maximumNumberOfProcesses: 4
     excludePaths:
