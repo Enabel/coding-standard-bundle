@@ -13,6 +13,7 @@ use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
@@ -50,6 +51,7 @@ return [
         ForbiddenSetterSniff::class,
         ForbiddenTraits::class,
         DocCommentSpacingSniff::class,
+        InlineDocCommentDeclarationSniff::class,
         SpaceAfterNotSniff::class,
         ForbiddenNormalClasses::class,
         UnusedParameterSniff::class,
