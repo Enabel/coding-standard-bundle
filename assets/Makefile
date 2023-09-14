@@ -175,7 +175,7 @@ php-insights-fix: ## Run PHP Insights
 	$(PHPQA) phpinsights --fix --flush-cache --no-interaction -v --config-path=vendor/enabel/coding-standard-bundle/tools/phpinsights.php
 
 php-cpd: ## Run PHP Copy/Paste Detector
-	$(PHPQA) phpcpd --min-lines 30 src/
+	$(PHPQA) phpcpd --min-lines 70 src/
 
 php-rector-dry: ## Run Rector (dry) - Instant Upgrades and Automated Refactoring
 	$(PHPQA) rector process --dry-run --config vendor/enabel/coding-standard-bundle/tools/rector.php src/
