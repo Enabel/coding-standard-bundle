@@ -45,7 +45,7 @@ cp -R vendor/enabel/coding-standard-bundle/assets/phpunit.xml.dist .
 
 Install the JavaScript dependencies for stylelint & eslint:
 ```bash
-yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
+docker compose run --rm node yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
 ```
 
 ### Step 4: Modify webpack config
