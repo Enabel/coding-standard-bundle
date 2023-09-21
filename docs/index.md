@@ -114,7 +114,7 @@ DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=${MYSQL_VE
 
 Install the JavaScript dependencies for stylelint & eslint:
 ```bash
-yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
+docker compose run --rm node yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
 ```
 
 ### Step 6: Modify webpack config

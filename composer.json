@@ -11,11 +11,15 @@
     ],
     "require": {
         "php": "^8.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "ergebnis/composer-normalize": "^2.29",
         "phpro/grumphp": "^1.15",
         "symfony/config": "^6.0",
         "symfony/dependency-injection": "^6.0",
         "symfony/framework-bundle": "^6.0",
+        "symfony/maker-bundle": "^1.51",
+        "symfony/orm-pack": "^2.4",
+        "symfony/phpunit-bridge": "^6.0",
         "symfony/webpack-encore-bundle": "^1.16"
     },
     "require-dev": {
@@ -24,8 +28,7 @@
         "phpstan/phpstan-phpunit": "^1.1",
         "phpunit/phpunit": "^9.5",
         "rector/rector": "^0.15.21",
-        "squizlabs/php_codesniffer": "^3.7",
-        "symfony/phpunit-bridge": "^6.0"
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "minimum-stability": "stable",
     "autoload": {

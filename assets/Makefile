@@ -121,10 +121,10 @@ docker-phpqa-up: docker-compose.yml ## Start the phpqa container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d phpqa
 
 docker-wait-database: docker-compose.yml ## Wait for docker [database] to be ready
-	@vendor/enabel/coding-standard-bundle/assets/docker/bin/wait-for-database.sh
+	./docker/bin/wait-for-database.sh
 
 docker-wait-redis: docker-compose.yml ## Wait for docker [redis] to be ready
-	@vendor/enabel/coding-standard-bundle/assets/docker/bin/wait-for-redis.sh
+	./docker/bin/wait-for-redis.sh
 
 ## —— CI: Tests ✅ —————————————————————————————————————————————————————————————
 tests: ## Run the PHPUnit tests
