@@ -9,7 +9,10 @@ use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousAbstractClassNamingSniff;
+use SlevomatCodingStandard\Sniffs\Classes\SuperfluousErrorNamingSniff;
+use SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousInterfaceNamingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
@@ -44,7 +47,10 @@ return [
     'remove' => [
         DisallowEmptySniff::class,
         DisallowYodaComparisonSniff::class,
+        ForbiddenPublicPropertySniff::class,
         SuperfluousAbstractClassNamingSniff::class,
+        SuperfluousErrorNamingSniff::class,
+        SuperfluousExceptionNamingSniff::class,
         SuperfluousInterfaceNamingSniff::class,
         SuperfluousTraitNamingSniff::class,
         ForbiddenDefineFunctions::class,

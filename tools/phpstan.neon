@@ -32,3 +32,6 @@ parameters:
         -
             message: "#^Property App\\\\Entity\\\\[a-zA-Z0-9\\_]+\\:\\:\\$[a-zA-Z0-9\\_]+ type mapping mismatch\\: property can contain App\\\\Entity\\\\[a-zA-Z0-9\\_]+\\|null but database expects App\\\\Entity\\\\[a-zA-Z0-9\\_]+\\.$#"
             reportUnmatched: false
+        -
+            message: "#^#Method App\\Repository(\w+\)*\w+Repository::find\w+\(\) should return (array<)?App\Entity\(\w+\)*\w+(>) ?(\|null) ? but returns mixed.$#"
+            reportUnmatched: false
