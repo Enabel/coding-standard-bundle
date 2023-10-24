@@ -20,7 +20,7 @@
         "symfony/maker-bundle": "^1.51",
         "symfony/orm-pack": "^2.4",
         "symfony/phpunit-bridge": "^6.0",
-        "symfony/webpack-encore-bundle": "^1.16"
+        "symfony/webpack-encore-bundle": "^1.16||^2.0"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^2.6",

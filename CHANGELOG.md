@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.23](https://github.com/enabel/coding-standard-bundle/tree/1.0.23) (2023-10-24)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/1.0.22...1.0.23)
+
 ## [1.0.22](https://github.com/enabel/coding-standard-bundle/tree/1.0.22) (2023-10-23)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/1.0.21...1.0.22)
