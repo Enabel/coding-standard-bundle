@@ -6,6 +6,7 @@ use NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenDefineFunctions;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses;
 use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits;
+use NunoMaduro\PhpInsights\Domain\Insights\ForbiddenGlobals;
 use NunoMaduro\PhpInsights\Domain\Sniffs\ForbiddenSetterSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff;
@@ -27,6 +28,7 @@ use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff;
 
 return [
     'preset' => 'symfony',
@@ -56,6 +58,7 @@ return [
         ForbiddenDefineFunctions::class,
         ForbiddenSetterSniff::class,
         ForbiddenTraits::class,
+        ForbiddenGlobals::class,
         DocCommentSpacingSniff::class,
         InlineDocCommentDeclarationSniff::class,
         SpaceAfterNotSniff::class,
@@ -65,11 +68,12 @@ return [
         DisallowMixedTypeHintSniff::class,
         DisallowEqualOperatorsSniff::class,
         ParameterTypeHintSniff::class,
+        ReturnTypeHintSniff::class,
     ],
     'config' => [
         LineLengthSniff::class => [
-            'lineLimit' => 120,
-            'absoluteLineLimit' => 150,
+            'lineLimit' => 170,
+            'absoluteLineLimit' => 200,
             'ignoreComments' => true,
         ],
         CyclomaticComplexityIsHigh::class => [
