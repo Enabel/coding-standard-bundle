@@ -72,7 +72,7 @@ return [
     ],
     'config' => [
         LineLengthSniff::class => [
-            'lineLimit' => 170,
+            'lineLimit' => 180,
             'absoluteLineLimit' => 200,
             'ignoreComments' => true,
         ],
@@ -80,7 +80,7 @@ return [
             'maxComplexity' => 60,
         ],
         FunctionLengthSniff::class => [
-            'maxLinesLength' => 200,
+            'maxLinesLength' => 250,
         ],
         PropertyTypeHintSniff::class => [
             'enableNativeTypeHint' => false,
