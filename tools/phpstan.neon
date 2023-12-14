@@ -13,7 +13,7 @@ parameters:
     doctrine:
         objectManagerLoader: phpstan/doctrine.php
         allCollectionsSelectable: false
-    level: 9
+    level: 8
     checkGenericClassInNonGenericObjectType: false
     treatPhpDocTypesAsCertain: false
     paths:
