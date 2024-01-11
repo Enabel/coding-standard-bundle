@@ -1,0 +1,43 @@
+grumphp:
+    parallel:
+        enabled: true
+        max_workers: 5
+    tasks:
+        composer:
+            file: ./composer.json
+            no_check_all: true
+        composer_normalize: ~
+        git_blacklist:
+            keywords:
+                - "die("
+                - "dd("
+                - "dump("
+                - "var_dump("
+                - "exit;"
+            regexp_type: G
+            match_word: true
+        git_branch_name:
+            blacklist:
+                - "develop"
+                - "master"
+        phpstan:
+            configuration: ./phpstan.neon
+            level: 9
+            ignore_patterns:
+                - /^assets\/(.*)/
+                - /^tools\/(.*)/
+                - /^vendor\/(.*)/
+            use_grumphp_paths: false
+        phpcs:
+            standard: [PSR12]
+            whitelist_patterns:
+                - /^vendor\/(.*)/
+                - /^var\/(.*)/
+        php_insight:
+            script: insight
+            metadata:
+                task: composer_script
+        phpunit:
+            config_file: ./phpunit.xml.dist
+
+

@@ -2,7 +2,8 @@ grumphp:
     git_hook_variables:
         EXEC_GRUMPHP_COMMAND: 'symfony php'
     parallel:
-        enabled: false
+        enabled: true
+        max_workers: 5
     tasks:
         composer:
             file: ./composer.json
