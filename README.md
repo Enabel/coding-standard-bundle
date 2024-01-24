@@ -1,6 +1,7 @@
 # Enabel: Coding Standard Bundle
 
 [![License](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](LICENSE)
+[![SymfonyInsight](https://insight.symfony.com/projects/70165dd7-a479-4d2f-94d9-37025da4a11a/mini.svg)](https://insight.symfony.com/projects/70165dd7-a479-4d2f-94d9-37025da4a11a)
 
 ## Introduction
 

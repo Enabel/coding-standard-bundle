@@ -16,7 +16,9 @@
     "rules": {
         "import/prefer-default-export": "off",
         "import/no-extraneous-dependencies": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "no-param-reassign": "off",
+        "class-methods-use-this": "off"
     },
     "settings": {
         "import/resolver": {

@@ -35,6 +35,8 @@ services:
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:
       - ./:/project
+    profiles:
+      - donotstart
 
   node:
     image: node:${NODE_VERSION:-16}
@@ -44,6 +46,8 @@ services:
       - ./:/project
     ports:
       - "8080"
+    profiles:
+      - donotstart
 
   redis:
     image: redis
