@@ -31,7 +31,6 @@ PCOV			= -dpcov.enabled=1 -dpcov.directory=. -dpcov.exclude="~vendor~"
 PHPUNIT			= XDEBUG_MODE=off $(PHP) $(PCOV) bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox
 PHPUNIT_CI		= XDEBUG_MODE=coverage $(PHP) bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox
 PHPQA			= $(DOCKER_COMP) run --rm phpqa
-YARN			= $(DOCKER_COMP) run --rm node yarn
 .DEFAULT_GOAL	= help
 .PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
 # Default arguments values ————————————————————————————————————————————————————
@@ -44,11 +43,11 @@ help: ## Outputs this help screen
 wait: docker-wait-database docker-wait-redis ## Sleep until service are ready
 
 ## —— Project 🛠———————————————————————————————————————————————————————————————
-install-up: docker-up wait composer-install db-schema assets
+install-up: docker-up wait composer-install db-schema
 
-install: install-up docker-down ## Install requirements (create database, install php dependencies and build assets)
+install: install-up docker-down ## Install requirements (create database and install php dependencies)
 
-update: docker-pull composer-update yarn-update ## Update requirements (Docker images, composer & yarn dependencies)
+update: docker-pull composer-update ## Update requirements (Docker images, composer)
 
 run: install-up symfony-start ## Start docker and start the web server
 
@@ -113,9 +112,6 @@ docker-database-up: docker-compose.yml ## Start the database container
 
 docker-redis-up: docker-compose.yml ## Start the redis container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d redis
-
-docker-node-up: docker-compose.yml ## Start the node container
-	$(DOCKER_ENV) $(DOCKER_COMP) up -d node
 
 docker-phpqa-up: docker-compose.yml ## Start the phpqa container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d phpqa
@@ -187,8 +183,7 @@ php-loc: ## Run PHPLOC - Measure the overall size of the project
 	$(PHPQA) phploc src/
 
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
-lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig lint-style lint-js ## Run linters
-fix-lint: lint-js-fix ## Try to fix the lint problem
+lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig ## Run linters
 
 lint-yaml: composer-install ## Lint YAML files
 	$(SYMFONY) lint:yaml config --parse-tags
@@ -207,15 +202,6 @@ lint-composer: ## Lint Composer config
 
 lint-twig: composer-install ## Run Twig Lint
 	$(SYMFONY) lint:twig templates
-
-lint-style: yarn-install ## Lint sass style
-	$(YARN) stylelint "assets/" -f tap
-
-lint-js: yarn-install ## Lint javascript files
-	$(YARN) eslint "assets/" -f tap
-
-lint-js-fix: yarn-install ## Fix lint javascript files
-	$(YARN) eslint --fix "assets/"
 
 ## —— Database 📑 ——————————————————————————————————————————————————————————————
 db-cache: ## Clear database metadata cache
@@ -240,35 +226,6 @@ db-reset: ## Drop, create & fill database.
 		$(MAKE) db-create; \
 		$(MAKE) db-fixtures; \
 	fi
-
-## —— Assets 💄 ——————————————————————————————————————————————————————————
-assets: yarn-install ## Run Webpack Encore to compile development assets
-	$(YARN) encore dev
-
-node_modules:
-	$(YARN) install
-
-yarn-install: composer-install node_modules ## Install yarn packages
-
-yarn-update: ## Upgrade yarn packages
-	$(YARN) upgrade
-
-yarn-build: yarn-install ## Run Webpack Encore to compile production assets
-	@$(YARN) build
-
-yarn-watch: yarn-install ## Recompile assets automatically when files change
-	@$(YARN) watch
-
-yarn-audit: yarn-install ## Run vulnerability audit against the installed node packages
-	$(YARN) audit
-
-## —— Translations 🏳️ ———————————————————————————————————————————————————
-translation-pull: composer-install ## Get translation from remote storage [Loco]
-	$(SYMFONY) translation:pull loco --force --format=xlf20
-	$(SYMFONY) cache:clear --env=$(env)
-
-translation-push: composer-install ## Push translation to remote storage [Loco]
-	$(SYMFONY) translation:push loco
 
 ## —— Tools 🧰 ———————————————————————————————————————————————————————————
 open: docker-up symfony-start ## Open the project webinterface

@@ -95,13 +95,3 @@ grumphp:
             triggered_by: [ twig ]
             metadata:
                 task: make
-        lint_style:
-            make_file: ~
-            task: lint-style
-            metadata:
-                task: make
-        lint_js:
-            make_file: ~
-            task: lint-js
-            metadata:
-                task: make

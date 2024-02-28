@@ -103,32 +103,8 @@ Add this block in your .env file
 
 ```dotenv
 ###> enabel/coding-standard-bundle ###
-NODE_VERSION=16
 MYSQL_VERSION=8
 PHP_VERSION=8.1
 DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=${MYSQL_VERSION}&charset=utf8mb4"
 ###< enabel/coding-standard-bundle ###
-```
-
-### Step 5: Download & install javascript dependencies
-
-Install the JavaScript dependencies for stylelint & eslint:
-```bash
-docker compose run --rm node yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
-```
-
-### Step 6: Modify webpack config
-
-Edit `webpack.config.js` and add the following lines:
-```javascript
-Encore
-  // ...
-  .enableEslintPlugin()
-```
-
-### Step 7: Build the assets
-
-Build assets:
-```bash
-make assets
 ```
