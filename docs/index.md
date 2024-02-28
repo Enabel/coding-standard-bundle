@@ -37,31 +37,8 @@ composer require enabel/coding-standard-bundle
 Copy the docker & phpunit config to your project
 
 ```bash
-cp -R vendor/enabel/coding-standard-bundle/assets/docker-compose.* .
+cp -R vendor/enabel/coding-standard-bundle/assets/compose.* .
 cp -R vendor/enabel/coding-standard-bundle/assets/phpunit.xml.dist .
-```
-
-### Step 3: Download & install javascript dependencies
-
-Install the JavaScript dependencies for stylelint & eslint:
-```bash
-docker compose run --rm node yarn add stylelint stylelint-config-prettier-scss stylelint-config-standard-scss eslint eslint-config-airbnb-base eslint-config-prettier eslint-import-resolver-webpack eslint-plugin-import eslint-webpack-plugin --dev
-```
-
-### Step 4: Modify webpack config
-
-Edit `webpack.config.js` and add the following lines:
-```javascript
-Encore
-  // ...
-  .enableEslintPlugin()
-```
-
-### Step 5: Build the assets
-
-Build assets:
-```bash
-make assets
 ```
 
 ## Applications that don't use Symfony Flex
