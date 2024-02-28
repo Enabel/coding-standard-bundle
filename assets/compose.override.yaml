@@ -30,7 +30,7 @@ services:
       PMA_USER: root
 
   phpqa:
-    image: jakzal/phpqa:php${PHP_VERSION:-8.1}
+    image: jakzal/phpqa:php${PHP_VERSION:-8.2}
     working_dir: /project
     user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
     volumes:

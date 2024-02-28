@@ -19,12 +19,6 @@ grumphp:
             regexp_type: G
             match_word: true
         git_branch_name:
-            whitelist:
-                - "us\/*"
-                - "sprint\/*"
-                - "hotfix\/*"
-                - "fix\/*"
-                - "feat\/*"
             blacklist:
                 - "develop"
                 - "master"

@@ -98,28 +98,28 @@ symfony-stop: ## Stop the web server
 	$(SYMFONY_BIN) server:stop
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
-docker-up: docker-compose.yml ## Start the docker hub (MySQL,redis,phpmyadmin,mailcatcher)
+docker-up: compose.yaml ## Start the docker hub (MySQL,redis,phpmyadmin,mailcatcher)
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d
 
-docker-pull: docker-compose.yml ## Pull docker image (MySQL,redis,phpmyadmin,mailcatcher)
+docker-pull: compose.yaml ## Pull docker image (MySQL,redis,phpmyadmin,mailcatcher)
 	$(DOCKER_ENV) $(DOCKER_COMP) pull
 
-docker-down: docker-compose.yml ## Stop the docker hub
+docker-down: compose.yaml ## Stop the docker hub
 	$(DOCKER_ENV) $(DOCKER_COMP) down --remove-orphans
 
-docker-database-up: docker-compose.yml ## Start the database container
+docker-database-up: compose.yaml ## Start the database container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d database
 
-docker-redis-up: docker-compose.yml ## Start the redis container
+docker-redis-up: compose.yaml ## Start the redis container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d redis
 
-docker-phpqa-up: docker-compose.yml ## Start the phpqa container
+docker-phpqa-up: compose.yaml ## Start the phpqa container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d phpqa
 
-docker-wait-database: docker-compose.yml ## Wait for docker [database] to be ready
+docker-wait-database: compose.yaml ## Wait for docker [database] to be ready
 	./docker/bin/wait-for-database.sh
 
-docker-wait-redis: docker-compose.yml ## Wait for docker [redis] to be ready
+docker-wait-redis: compose.yaml ## Wait for docker [redis] to be ready
 	./docker/bin/wait-for-redis.sh
 
 ## —— CI: Tests ✅ —————————————————————————————————————————————————————————————
