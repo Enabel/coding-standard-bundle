@@ -22,10 +22,8 @@ The bundle aims to provide basics Coding Standard and helper, including:
   - Symfony container
   - Symfony services
   - Composer
-- Stylelint (sass)
-- ESLint (js)
 - Makefile
-- Docker (MySQL, Node, Redis, Mailcatcher, PHPQA)
+- Docker (MySQL, Redis, Mailcatcher, PHPQA)
 
 ## Installation & usage
 

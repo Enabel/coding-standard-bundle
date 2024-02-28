@@ -18,8 +18,7 @@
         "symfony/dependency-injection": "^6.0 || ^7.0",
         "symfony/framework-bundle": "^6.0 || ^7.0",
         "symfony/orm-pack": "^2.4",
-        "symfony/phpunit-bridge": "^6.0 || ^7.0",
-        "symfony/webpack-encore-bundle": "^1.16 || ^2.0"
+        "symfony/phpunit-bridge": "^6.0 || ^7.0"
     },
     "require-dev": {
         "nunomaduro/phpinsights": "^2.11",
