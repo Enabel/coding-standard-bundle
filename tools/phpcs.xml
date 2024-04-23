@@ -10,6 +10,13 @@
 
     <rule ref="PSR12"/>
 
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="180"/>
+            <property name="absoluteLineLimit" value="200"/>
+        </properties>
+    </rule>
+
     <file>/project/bin/</file>
     <file>/project/config/</file>
     <file>/project/public/</file>
