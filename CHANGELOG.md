@@ -1,8 +1,32 @@
 # Changelog
 
+## [2.0.3](https://github.com/enabel/coding-standard-bundle/tree/2.0.3) (2024-04-23)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.2...2.0.3)
+
+## [2.0.2](https://github.com/enabel/coding-standard-bundle/tree/2.0.2) (2024-04-19)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.1...2.0.2)
+
+**Merged pull requests:**
+
+- Update phpcs.xml [\#3](https://github.com/Enabel/coding-standard-bundle/pull/3) ([falcohb](https://github.com/falcohb))
+
+## [2.0.1](https://github.com/enabel/coding-standard-bundle/tree/2.0.1) (2024-04-12)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.0...2.0.1)
+
+**Merged pull requests:**
+
+- Update phpstan.neon [\#2](https://github.com/Enabel/coding-standard-bundle/pull/2) ([florenttiteca](https://github.com/florenttiteca))
+
 ## [2.0.0](https://github.com/enabel/coding-standard-bundle/tree/2.0.0) (2024-02-28)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/1.0.30...2.0.0)
+
+**Merged pull requests:**
+
+- ♻️ Remove assets \(node, webpack\) [\#1](https://github.com/Enabel/coding-standard-bundle/pull/1) ([damienlagae](https://github.com/damienlagae))
 
 ## [1.0.30](https://github.com/enabel/coding-standard-bundle/tree/1.0.30) (2024-01-26)
 

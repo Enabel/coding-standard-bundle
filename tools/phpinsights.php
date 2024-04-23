@@ -25,6 +25,7 @@ use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
 use SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\UseSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
+use SlevomatCodingStandard\Sniffs\Operators\RequireOnlyStandaloneIncrementAndDecrementOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\DisallowMixedTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ParameterTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
@@ -69,6 +70,7 @@ return [
         DisallowEqualOperatorsSniff::class,
         ParameterTypeHintSniff::class,
         ReturnTypeHintSniff::class,
+        RequireOnlyStandaloneIncrementAndDecrementOperatorsSniff::class,
     ],
     'config' => [
         LineLengthSniff::class => [

@@ -23,6 +23,7 @@ else
 	endif
 endif
 
+PROJECT_NAME	= project_name
 DOCKER_COMP		= $(DOCKER) compose
 PHP				= $(SYMFONY_BIN) php
 SYMFONY			= $(SYMFONY_BIN) console
@@ -31,8 +32,9 @@ PCOV			= -dpcov.enabled=1 -dpcov.directory=. -dpcov.exclude="~vendor~"
 PHPUNIT			= XDEBUG_MODE=off $(PHP) $(PCOV) bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox
 PHPUNIT_CI		= XDEBUG_MODE=coverage $(PHP) bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox
 PHPQA			= $(DOCKER_COMP) run --rm phpqa
+YARN			= $(DOCKER_COMP) run --rm node yarn
 .DEFAULT_GOAL	= help
-.PHONY: $(filter-out vendor node_modules,$(MAKECMDGOALS))
+.PHONY: $(filter-out vendor,$(MAKECMDGOALS))
 # Default arguments values ————————————————————————————————————————————————————
 env = dev
 
@@ -43,15 +45,15 @@ help: ## Outputs this help screen
 wait: docker-wait-database docker-wait-redis ## Sleep until service are ready
 
 ## —— Project 🛠———————————————————————————————————————————————————————————————
-install-up: docker-up wait composer-install db-schema
+install-up: docker-up composer-install wait assets
 
-install: install-up docker-down ## Install requirements (create database and install php dependencies)
+install: install-up docker-down ## Install requirements (create database, install php dependencies and build assets)
 
-update: docker-pull composer-update ## Update requirements (Docker images, composer)
+update: docker-pull composer-update yarn-update ## Update requirements (Docker images, composer & yarn dependencies)
 
 run: install-up symfony-start ## Start docker and start the web server
 
-abort: docker-down symfony-stop ## Stop docker and the Symfony binary server
+abort: symfony-stop docker-down ## Stop docker and the Symfony binary server
 
 log: ## Show symfony log
 	$(SYMFONY_BIN) server:log
@@ -72,13 +74,16 @@ purge: ## Purge the dependencies
 
 ## —— Composer 🧙‍♂️ ————————————————————————————————————————————————————————————
 vendor: composer.lock
-	$(COMPOSER) install --no-progress --prefer-dist --optimize-autoloader
+	@if [ ! -d "vendor" ]; then \
+		$(COMPOSER) install --no-progress --prefer-dist --optimize-autoloader; \
+	else \
+		echo "Vendor directory already exists. Skipping composer-install."; \
+	fi
 
 composer-install: vendor  ## Install vendors according to the current composer.lock file
 
 composer-update: composer.json ## Update vendors according to the composer.json file
 	$(COMPOSER) update
-
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
 cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
@@ -91,7 +96,12 @@ cc: ## Clear the cache. DID YOU CLEAR YOUR CACHE????
 cert-install: ## Install the local HTTPS certificates
 	$(SYMFONY_BIN) server:ca:install
 
-symfony-start: ## Serve the application with HTTPS support
+symfony-proxy: ## Start proxy and attach domain to the local server
+	$(SYMFONY_BIN) proxy:change:tld wip
+	$(SYMFONY_BIN) proxy:start
+	$(SYMFONY_BIN) proxy:domain:attach $(PROJECT_NAME)
+
+symfony-start: symfony-proxy ## Serve the application with HTTPS support
 	$(SYMFONY_BIN) serve --daemon
 
 symfony-stop: ## Stop the web server
@@ -113,14 +123,20 @@ docker-database-up: compose.yaml ## Start the database container
 docker-redis-up: compose.yaml ## Start the redis container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d redis
 
+docker-node-up: compose.yaml ## Start the node container
+	$(DOCKER_ENV) $(DOCKER_COMP) up -d node
+
+docker-typesense-up: compose.yaml ## Start the typesense container
+	$(DOCKER_ENV) $(DOCKER_COMP) up -d typesense
+
 docker-phpqa-up: compose.yaml ## Start the phpqa container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d phpqa
 
 docker-wait-database: compose.yaml ## Wait for docker [database] to be ready
-	./docker/bin/wait-for-database.sh
+	@./docker/bin/wait-for-database.sh
 
 docker-wait-redis: compose.yaml ## Wait for docker [redis] to be ready
-	./docker/bin/wait-for-redis.sh
+	@./docker/bin/wait-for-redis.sh
 
 ## —— CI: Tests ✅ —————————————————————————————————————————————————————————————
 tests: ## Run the PHPUnit tests
@@ -161,7 +177,7 @@ php-cbf: ## Run PHP Code Beautifier and Fixer
 php-mess: ## Run PHP Mess Detector
 	$(PHPQA) phpmd src/,tests/ ansi vendor/enabel/coding-standard-bundle/tools/.phpmd.xml
 
-php-stan: ## Run PHPStan
+php-stan: docker-typesense-up ## Run PHPStan
 	$(PHPQA) phpstan analyse -c vendor/enabel/coding-standard-bundle/tools/phpstan.neon --no-interaction
 
 php-insights: ## Run PHP Insights
@@ -183,7 +199,8 @@ php-loc: ## Run PHPLOC - Measure the overall size of the project
 	$(PHPQA) phploc src/
 
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
-lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig ## Run linters
+lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig lint-style lint-js ## Run linters
+fix-lint: lint-js-fix ## Try to fix the lint problem
 
 lint-yaml: composer-install ## Lint YAML files
 	$(SYMFONY) lint:yaml config --parse-tags
@@ -195,13 +212,22 @@ lint-container: composer-install ## Lint Parameters and Services
 	$(SYMFONY) lint:container --no-debug
 
 lint-doctrine: composer-install ## Lint Doctrine mapping
-	$(SYMFONY) doctrine:schema:validate --skip-sync -vvv --no-interaction
+	$(SYMFONY) doctrine:schema:validate --skip-sync -v --no-interaction
 
 lint-composer: ## Lint Composer config
 	$(COMPOSER) validate --strict
 
 lint-twig: composer-install ## Run Twig Lint
 	$(SYMFONY) lint:twig templates
+
+lint-style: yarn-install ## Lint sass style
+	$(YARN) stylelint "assets/" -f tap
+
+lint-js: yarn-install ## Lint javascript files
+	$(YARN) eslint "assets/" -f tap
+
+lint-js-fix: yarn-install ## Fix lint javascript files
+	$(YARN) eslint --fix "assets/"
 
 ## —— Database 📑 ——————————————————————————————————————————————————————————————
 db-cache: ## Clear database metadata cache
@@ -216,16 +242,60 @@ db-drop-force: docker-database-up docker-wait-database composer-install ## Force
 db-schema: db-create ## Update the database schema
 	$(SYMFONY) doctrine:migrations:migrate --env=$(env) -q --allow-no-migration
 
-db-fixtures: db-schema ## Load the fixtures
+db-fixtures: db-schema db-load-default ## Load the fixtures
 	$(SYMFONY) doctrine:fixtures:load --env=$(env) -n
 
-db-reset: ## Drop, create & fill database.
+db-clean: ## Clean the database (drop, create and load schema)
+	$(eval CONFIRM := $(shell read -p "Are you sure you want to cleanup the database? [y/N] " CONFIRM && echo $${CONFIRM:-N}))
+	@if [ "$(CONFIRM)" = "y" ]; then \
+		$(MAKE) db-drop-force; \
+		$(MAKE) db-schema; \
+	fi
+
+db-reset: ## Drop, create & fill database with fixtures.
 	$(eval CONFIRM := $(shell read -p "Are you sure you want to reset the database? [y/N] " CONFIRM && echo $${CONFIRM:-N}))
 	@if [ "$(CONFIRM)" = "y" ]; then \
-		$(MAKE) db-drop-froce; \
-		$(MAKE) db-create; \
+		$(MAKE) db-drop-force; \
+		$(MAKE) db-schema; \
 		$(MAKE) db-fixtures; \
 	fi
+
+## —— Assets 💄 ——————————————————————————————————————————————————————————
+assets: yarn-install ## Run Webpack Encore to compile development assets
+	$(YARN) encore dev
+
+node_modules:
+	$(YARN) install --force
+
+yarn-install: composer-install node_modules ## Install yarn packages
+
+yarn-update: ## Upgrade yarn packages
+	$(YARN) upgrade
+
+yarn-build: yarn-install ## Run Webpack Encore to compile production assets
+	@$(YARN) build
+
+yarn-watch: yarn-install ## Recompile assets automatically when files change
+	@$(YARN) watch
+
+yarn-audit: yarn-install ## Run vulnerability audit against the installed node packages
+	$(YARN) audit
+
+## —— Translations 🏳️ ———————————————————————————————————————————————————
+translation-pull: composer-install ## Get translation from remote storage [Loco]
+	$(SYMFONY) translation:download
+	$(SYMFONY) cache:clear --env=$(env)
+
+translation-push: composer-install ## Push translation to remote storage [Loco]
+	$(SYMFONY) translation:push loco
+
+## —— Indexing 📇 ———————————————————————————————————————————————————————————
+index-create: ## Create the search engine
+	$(SYMFONY) typesense:create -n --env=$(env)
+index-import: index-create ## Import data into the search engine
+	$(SYMFONY) typesense:import -n --env=$(env)
+indexing: ## Reindex the search engine
+	$(SYMFONY) typesense:import -n --env=$(env)
 
 ## —— Tools 🧰 ———————————————————————————————————————————————————————————
 open: docker-up symfony-start ## Open the project webinterface

@@ -12,9 +12,10 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     $rectorConfig->symfonyContainerXml('/project/var/cache/dev/App_KernelDevDebugContainer.xml');
 
-    $rectorConfig->import(SymfonySetList::SYMFONY_62);
+    $rectorConfig->import(SymfonySetList::SYMFONY_64);
     $rectorConfig->import(SymfonySetList::SYMFONY_CODE_QUALITY);
     $rectorConfig->import(SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES);
+    $rectorConfig->import(SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION);
     $rectorConfig->import(DoctrineSetList::DOCTRINE_CODE_QUALITY);
     $rectorConfig->import(DoctrineSetList::ANNOTATIONS_TO_ATTRIBUTES);
 };
