@@ -14,7 +14,6 @@ parameters:
         objectManagerLoader: phpstan/doctrine.php
         allCollectionsSelectable: false
     level: 8
-    checkGenericClassInNonGenericObjectType: false
     treatPhpDocTypesAsCertain: false
     paths:
         - /project/src
@@ -23,6 +22,8 @@ parameters:
     excludePaths:
         - src/Factory
     ignoreErrors:
+        -
+            identifier: missingType.generics
         -
             message: "#Call to an undefined method [a-zA-Z0-9\\_]+|Zenstruck\\\\Foundry\\\\Proxy\\:\\:object\\(\\)\\.$#"
             reportUnmatched: false
