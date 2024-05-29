@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.5](https://github.com/enabel/coding-standard-bundle/tree/2.0.5) (2024-05-29)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.4...2.0.5)
+
+## [2.0.4](https://github.com/enabel/coding-standard-bundle/tree/2.0.4) (2024-05-16)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.3...2.0.4)
+
+**Merged pull requests:**
+
+- Update phpstan.neon [\#4](https://github.com/Enabel/coding-standard-bundle/pull/4) ([falcohb](https://github.com/falcohb))
+
 ## [2.0.3](https://github.com/enabel/coding-standard-bundle/tree/2.0.3) (2024-04-23)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.2...2.0.3)

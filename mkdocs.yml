@@ -1,0 +1,24 @@
+site_name: enabel/coding-standard-bundle
+site_description: Enabel Coding Standard for Symfony
+
+repo_name: enabel/coding-standard-bundle
+repo_url: https://github.com/Enabel/coding-standard-bundle
+edit_uri: https://github.com/Enabel/coding-standard-bundle/edit/main/docs/
+
+theme:
+  name: readthedocs
+  language: en
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/enabel/coding-standard-bundle
+      name: enabel/coding-standard-bundle repository
+  generator: false
+
+plugins:
+  - search: { }
+
+nav:
+  - Installation: 'index.md'
+  - 'Bug tracker': 'https://github.com/Enabel/coding-standard-bundle/issues'

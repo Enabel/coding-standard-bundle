@@ -24,6 +24,7 @@ parameters:
     ignoreErrors:
         -
             identifier: missingType.generics
+            reportUnmatched: false
         -
             message: "#Call to an undefined method [a-zA-Z0-9\\_]+|Zenstruck\\\\Foundry\\\\Proxy\\:\\:object\\(\\)\\.$#"
             reportUnmatched: false

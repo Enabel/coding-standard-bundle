@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Artifact (with permissions)
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}
+          key: artifacts-${{ github.run_id }}-${{ github.run_number }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: symfony, composer:v2
+          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+
+      - name: Install Composer dependencies
+        run: |
+          composer validate --no-check-publish
+          composer install --prefer-dist --no-progress --optimize-autoloader --no-interaction
+
+      - name: Cleanup build
+        run: |
+          rm -Rf .git/      
+
+  security:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Artifact (with permissions)
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}
+          key: artifacts-${{ github.run_id }}-${{ github.run_number }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: symfony
+          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+
+      - name: Security checker
+        run: symfony check:security
+
+  coding-standards:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Artifact (with permissions)
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}
+          key: artifacts-${{ github.run_id }}-${{ github.run_number }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: symfony
+          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+
+      - name: Run php_codesniffer with PSR12 standard
+        run: composer cs
+
+      - name: Run PHPStan
+        run: composer stan
+
+      - name: Run PHP Insights
+        run: composer insight
+
+  tests:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Artifact (with permissions)
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}
+          key: artifacts-${{ github.run_id }}-${{ github.run_number }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: symfony
+          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+          coverage: xdebug
+
+      - name: All Tests (unit & functional)
+        run: composer test
+
+      - name: Publish coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          directory: coverage
