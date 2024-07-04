@@ -4,6 +4,10 @@
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.6...3.0.0)
 
+## [2.0.7](https://github.com/enabel/coding-standard-bundle/tree/2.0.7) (2024-07-04)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.6...2.0.7)
+
 ## [2.0.6](https://github.com/enabel/coding-standard-bundle/tree/2.0.6) (2024-06-26)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.5...2.0.6)
