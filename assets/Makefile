@@ -32,7 +32,6 @@ PCOV			= -dpcov.enabled=1 -dpcov.directory=. -dpcov.exclude="~vendor~"
 PHPUNIT			= XDEBUG_MODE=off $(PHP) $(PCOV) bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox
 PHPUNIT_CI		= XDEBUG_MODE=coverage $(PHP) bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox
 PHPQA			= $(DOCKER_COMP) run --rm phpqa
-YARN			= $(DOCKER_COMP) run --rm node yarn
 .DEFAULT_GOAL	= help
 .PHONY: $(filter-out vendor,$(MAKECMDGOALS))
 # Default arguments values ————————————————————————————————————————————————————
@@ -49,7 +48,7 @@ install-up: docker-up composer-install wait assets
 
 install: install-up docker-down ## Install requirements (create database, install php dependencies and build assets)
 
-update: docker-pull composer-update yarn-update ## Update requirements (Docker images, composer & yarn dependencies)
+update: docker-pull composer-update ## Update requirements (Docker images & composer dependencies)
 
 run: install-up symfony-start ## Start docker and start the web server
 
@@ -68,7 +67,6 @@ ci: security lint analyze test ## Launch the ci locally
 
 purge: ## Purge the dependencies
 	sudo rm -Rf vendor/
-	sudo rm -Rf node_modules/
 	sudo rm -Rf var/cache/*
 	sudo rm -Rf var/log/*
 
@@ -122,9 +120,6 @@ docker-database-up: compose.yaml ## Start the database container
 
 docker-redis-up: compose.yaml ## Start the redis container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d redis
-
-docker-node-up: compose.yaml ## Start the node container
-	$(DOCKER_ENV) $(DOCKER_COMP) up -d node
 
 docker-typesense-up: compose.yaml ## Start the typesense container
 	$(DOCKER_ENV) $(DOCKER_COMP) up -d typesense
@@ -199,8 +194,7 @@ php-loc: ## Run PHPLOC - Measure the overall size of the project
 	$(PHPQA) phploc src/
 
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
-lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig lint-style lint-js ## Run linters
-fix-lint: lint-js-fix ## Try to fix the lint problem
+lint: lint-yaml lint-xliff lint-container lint-doctrine lint-composer lint-twig ## Run linters
 
 lint-yaml: composer-install ## Lint YAML files
 	$(SYMFONY) lint:yaml config --parse-tags
@@ -219,15 +213,6 @@ lint-composer: ## Lint Composer config
 
 lint-twig: composer-install ## Run Twig Lint
 	$(SYMFONY) lint:twig templates
-
-lint-style: yarn-install ## Lint sass style
-	$(YARN) stylelint "assets/" -f tap
-
-lint-js: yarn-install ## Lint javascript files
-	$(YARN) eslint "assets/" -f tap
-
-lint-js-fix: yarn-install ## Fix lint javascript files
-	$(YARN) eslint --fix "assets/"
 
 ## —— Database 📑 ——————————————————————————————————————————————————————————————
 db-cache: ## Clear database metadata cache
@@ -261,25 +246,17 @@ db-reset: ## Drop, create & fill database with fixtures.
 	fi
 
 ## —— Assets 💄 ——————————————————————————————————————————————————————————
-assets: yarn-install ## Run Webpack Encore to compile development assets
-	$(YARN) encore dev
+assets: ## Run sass:build to watch assets
+	$(SYMFONY) sass:build --watch
 
-node_modules:
-	$(YARN) install --force
+assets-prod: build-sass ## Run AssetMapper to compile production assets
+	$(SYMFONY) asset-map:compile
 
-yarn-install: composer-install node_modules ## Install yarn packages
+build-sass: ## Run sass:build to compile assets
+	$(SYMFONY) sass:build
 
-yarn-update: ## Upgrade yarn packages
-	$(YARN) upgrade
-
-yarn-build: yarn-install ## Run Webpack Encore to compile production assets
-	@$(YARN) build
-
-yarn-watch: yarn-install ## Recompile assets automatically when files change
-	@$(YARN) watch
-
-yarn-audit: yarn-install ## Run vulnerability audit against the installed node packages
-	$(YARN) audit
+asset-audit: ## Run vulnerability audit against the importmap
+	$(SYMFONY) importmap:audit
 
 ## —— Translations 🏳️ ———————————————————————————————————————————————————
 translation-pull: composer-install ## Get translation from remote storage [Loco]

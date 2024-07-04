@@ -41,17 +41,6 @@ services:
     profiles:
       - donotstart
 
-  node:
-    image: node:${NODE_VERSION:-20}
-    privileged: true
-    working_dir: /project
-    volumes:
-      - ./:/project
-    ports:
-      - "8080"
-    profiles:
-      - donotstart
-
   redis:
     image: redis
     volumes:

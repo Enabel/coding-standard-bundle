@@ -41,6 +41,9 @@ service nginx reload
 # Symfony cache
 php /home/site/wwwroot/bin/console cache:warmup
 
+# Symfony cache pool (redis)
+php /home/site/wwwroot/bin/console cache:pool:clear --all
+
 # Symfony database
 php /home/site/wwwroot/bin/console doctrine:migrations:migrate --no-interaction
 
@@ -60,8 +63,9 @@ php /home/site/wwwroot/bin/console cache:clear
 apt update -qq
 apt install cron -yqq
 
-# Add a cron job to run a worker for messenger [async] every 15 minutes
-(crontab -l ; echo "*/15 * * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume async --time-limit=1000 --env=prod -v 2>&1 | /usr/bin/logger -t CRONOUTPUT") | crontab -
+# Add a cron job to run a worker for messenger [async] every hours (15 minutes past the hour)
+(crontab -l ; echo "15 */1 * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume async --time-limit=3500 --env=prod -v 2>&1 | /usr/bin/logger -t CRONOUTPUT") | crontab -
+(crontab -l ; echo "15 */1 * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume scheduler_default --time-limit=3500 --env=prod -v 2>&1 | /usr/bin/logger -t CRONOUTPUT") | crontab -
 
 # Start the cron service
 service cron start
