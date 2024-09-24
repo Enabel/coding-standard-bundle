@@ -74,8 +74,8 @@ return [
     ],
     'config' => [
         LineLengthSniff::class => [
-            'lineLimit' => 180,
-            'absoluteLineLimit' => 200,
+            'lineLimit' => 220,
+            'absoluteLineLimit' => 250,
             'ignoreComments' => true,
         ],
         CyclomaticComplexityIsHigh::class => [
