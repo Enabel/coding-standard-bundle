@@ -1,8 +1,16 @@
 # Changelog
 
+## [3.0.1](https://github.com/enabel/coding-standard-bundle/tree/3.0.1) (2024-09-24)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.0...3.0.1)
+
 ## [3.0.0](https://github.com/enabel/coding-standard-bundle/tree/3.0.0) (2024-07-04)
 
-[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.6...3.0.0)
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.7...3.0.0)
+
+**Merged pull requests:**
+
+- Feat/asset mapper [\#5](https://github.com/Enabel/coding-standard-bundle/pull/5) ([damienlagae](https://github.com/damienlagae))
 
 ## [2.0.7](https://github.com/enabel/coding-standard-bundle/tree/2.0.7) (2024-07-04)
 
