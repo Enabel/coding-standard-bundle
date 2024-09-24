@@ -34,12 +34,16 @@ composer dump-env prod -nq -d /home/site/wwwroot
 echo "date.timezone=Europe/Brussels" > /usr/local/etc/php/conf.d/symfony.ini
 echo "post_max_size=80M" >> /usr/local/etc/php/conf.d/symfony.ini
 echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/symfony.ini
+echo "memory_limit=2048M" >> /usr/local/etc/php/conf.d/symfony.ini
 
 # Restart nginx
 service nginx reload
 
 # Symfony cache
 php /home/site/wwwroot/bin/console cache:warmup
+
+# Symfony cache pool (redis)
+php /home/site/wwwroot/bin/console cache:pool:clear --all
 
 # Symfony database
 php /home/site/wwwroot/bin/console doctrine:migrations:migrate --no-interaction
@@ -49,6 +53,12 @@ php /home/site/wwwroot/bin/console doctrine:migrations:migrate --no-interaction
 
 # Symfony clear cache
 php /home/site/wwwroot/bin/console cache:clear
+
+# Symfony clear cache pools
+php /home/site/wwwroot/bin/console cache:pool:clear --all
+
+# Test mailer (generate a test email & warning to no allowed ip)
+php /home/site/wwwroot/bin/console mailer:test --from noreply@enabel.be --subject "Test mailer: $WEBSITE_SITE_NAME" --body "This is a test email from $WEBSITE_SITE_NAME" dl@enabel.be
 
 # Symfony recreate index
 #php /home/site/wwwroot/bin/console typesense:create -n
@@ -61,7 +71,8 @@ apt update -qq
 apt install cron -yqq
 
 # Add a cron job to run a worker for messenger [async] every 15 minutes
-(crontab -l ; echo "*/15 * * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume async --time-limit=1000 --env=prod -v 2>&1 | /usr/bin/logger -t CRONOUTPUT") | crontab -
+(crontab -l ; echo "15 */1 * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume async --time-limit=3500 --env=prod -vv >> /home/LogFiles/$(date +\%Y_\%m_\%d)_messenger_consume_async.log 2>&1") | crontab -
+(crontab -l ; echo "15 */1 * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume scheduler_default --time-limit=3500 --env=prod -vv >> /home/LogFiles/$(date +\%Y_\%m_\%d)_messenger_consume_scheduler.log 2>&1") | crontab -
 
 # Start the cron service
 service cron start

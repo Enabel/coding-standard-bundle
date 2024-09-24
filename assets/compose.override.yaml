@@ -53,7 +53,7 @@ services:
       - donotstart
 
   redis:
-    image: redis
+    image: redis:6
     volumes:
       - ./docker/redis/data:/data
     ports:
