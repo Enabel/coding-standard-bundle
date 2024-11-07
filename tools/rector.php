@@ -12,7 +12,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
     $rectorConfig->symfonyContainerXml('/project/var/cache/dev/App_KernelDevDebugContainer.xml');
 
-    $rectorConfig->import(SymfonySetList::SYMFONY_64);
+    $rectorConfig->import(SymfonySetList::SYMFONY_70);
     $rectorConfig->import(SymfonySetList::SYMFONY_CODE_QUALITY);
     $rectorConfig->import(SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES);
     $rectorConfig->import(SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION);
