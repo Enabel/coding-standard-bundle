@@ -33,7 +33,7 @@ return RectorConfig::configure()
         DoctrineSetList::DOCTRINE_DBAL_40,
         DoctrineSetList::GEDMO_ANNOTATIONS_TO_ATTRIBUTES,
     ])
-    ->withSymfonyContainerXml(__DIR__ . '/var/cache/dev/App_KernelDevDebugContainer.xml')
+    ->withSymfonyContainerXml('/project/var/cache/dev/App_KernelDevDebugContainer.xml')
     ->registerService(SymfonyRoutesProvider::class, SymfonyRoutesProviderInterface::class)
     ->withPhpVersion(PhpVersion::PHP_83)
     ->withAttributesSets(
@@ -46,5 +46,5 @@ return RectorConfig::configure()
         AddOverrideAttributeToOverriddenMethodsRector::class,
     ])
     ->withPaths([
-        __DIR__ . '/src',
+        '/project/src',
     ]);

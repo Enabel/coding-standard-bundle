@@ -1,12 +1,28 @@
 # Changelog
 
+## [3.0.3](https://github.com/enabel/coding-standard-bundle/tree/3.0.3) (2024-11-19)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.2...3.0.3)
+
+## [2.0.10](https://github.com/enabel/coding-standard-bundle/tree/2.0.10) (2024-11-19)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/1.0.31...2.0.10)
+
+## [1.0.31](https://github.com/enabel/coding-standard-bundle/tree/1.0.31) (2024-11-19)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.9...1.0.31)
+
+## [2.0.9](https://github.com/enabel/coding-standard-bundle/tree/2.0.9) (2024-11-07)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.2...2.0.9)
+
 ## [3.0.2](https://github.com/enabel/coding-standard-bundle/tree/3.0.2) (2024-11-07)
 
-[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.1...3.0.2)
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.8...3.0.2)
 
 ## [2.0.8](https://github.com/enabel/coding-standard-bundle/tree/2.0.8) (2024-09-24)
 
-[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/2.0.7...2.0.8)
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.1...2.0.8)
 
 ## [3.0.1](https://github.com/enabel/coding-standard-bundle/tree/3.0.1) (2024-09-24)
 
