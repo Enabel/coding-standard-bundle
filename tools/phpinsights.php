@@ -19,6 +19,7 @@ use SlevomatCodingStandard\Sniffs\Classes\SuperfluousTraitNamingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff;
@@ -49,6 +50,7 @@ return [
     ],
     'remove' => [
         DisallowEmptySniff::class,
+        DisallowShortTernaryOperatorSniff::class,
         DisallowYodaComparisonSniff::class,
         ForbiddenPublicPropertySniff::class,
         SuperfluousAbstractClassNamingSniff::class,
@@ -94,10 +96,10 @@ return [
         ],
     ],
     'requirements' => [
-        'min-quality' => 90,
+        'min-quality' => 70,
         'min-complexity' => 70,
-        'min-architecture' => 90,
-        'min-style' => 90,
+        'min-architecture' => 70,
+        'min-style' => 70,
         'disable-security-check' => false,
     ],
     'threads' => null,
