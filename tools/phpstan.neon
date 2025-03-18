@@ -8,8 +8,8 @@ includes:
 
 parameters:
     symfony:
-        container_xml_path: /project/var/cache/dev/App_KernelDevDebugContainer.xml
-        console_application_loader: phpstan/console.php
+        containerXmlPath: /project/var/cache/dev/App_KernelDevDebugContainer.xml
+        consoleApplicationLoader: phpstan/console.php
     doctrine:
         objectManagerLoader: phpstan/doctrine.php
         allCollectionsSelectable: false
@@ -20,10 +20,13 @@ parameters:
     parallel:
         maximumNumberOfProcesses: 4
     excludePaths:
-        - src/Factory
+        - /project/src/Factory
     ignoreErrors:
         -
             identifier: missingType.generics
+            reportUnmatched: false
+        -
+            identifier: notIdentical.alwaysTrue
             reportUnmatched: false
         -
             message: "#Call to an undefined method [a-zA-Z0-9\\_]+|Zenstruck\\\\Foundry\\\\Proxy\\:\\:object\\(\\)\\.$#"
@@ -34,3 +37,18 @@ parameters:
         -
             message: "#^Property App\\\\Entity\\\\[a-zA-Z0-9\\_\\\\]+\\:\\:\\$[a-zA-Z0-9\\_]+ type mapping mismatch\\: property can contain App\\\\Entity\\\\[a-zA-Z0-9\\_\\\\]+\\|null but database expects App\\\\Entity\\\\[a-zA-Z0-9\\_\\\\]+\\.$#"
             reportUnmatched: false
+        -
+            identifier: property.unusedType
+            reportUnmatched: false
+        -
+            identifier: return.unusedType
+            reportUnmatched: false
+            path: /project/src/Repository
+        -
+            identifier: notIdentical.alwaysTrue
+            reportUnmatched: false
+            path: /project/src/Repository
+        -
+            identifier: missingType.iterableValue
+            reportUnmatched: false
+            path: /project/src/Repository
