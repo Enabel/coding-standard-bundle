@@ -21,7 +21,7 @@ parameters:
     parallel:
         maximumNumberOfProcesses: 4
     excludePaths:
-        - /project/src/Factory
+        - /project/src/Factory (?)
     ignoreErrors:
         -
             identifier: missingType.generics
