@@ -15,6 +15,7 @@ parameters:
         allCollectionsSelectable: false
     level: 8
     treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
     paths:
         - /project/src
     parallel:
