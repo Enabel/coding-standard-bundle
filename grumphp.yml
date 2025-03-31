@@ -33,10 +33,6 @@ grumphp:
             whitelist_patterns:
                 - /^vendor\/(.*)/
                 - /^var\/(.*)/
-        php_insight:
-            script: insight
-            metadata:
-                task: composer_script
         phpunit:
             config_file: ./phpunit.xml.dist
 

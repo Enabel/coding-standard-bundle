@@ -52,15 +52,11 @@
         "cs": "vendor/bin/phpcs --standard=PSR12 --parallel=4 --ignore=vendor,var,coverage .",
         "cs-fix": "vendor/bin/phpcbf --standard=PSR12 --parallel=4 --ignore=vendor,var,coverage .",
         "fix": [
-            "@cs-fix",
-            "@insight-fix"
+            "@cs-fix"
         ],
-        "insight": "vendor/bin/phpinsights --no-interaction",
-        "insight-fix": "vendor/bin/phpinsights --no-interaction --fix",
         "qa": [
             "@cs",
             "@stan",
-            "@insight",
             "@test"
         ],
         "stan": "vendor/bin/phpstan analyse -c phpstan.neon --no-interaction",
@@ -70,8 +66,6 @@
         "cs": "Run php_codesniffer with PSR12 standard",
         "cs-fix": "Run PHP Code Beautifier",
         "fix": "Run fixer",
-        "insight": "Run PHP Insights",
-        "insight-fix": "Run PHP Insights and fix",
         "qa": "Run static analysis tools & test",
         "stan": "Run PHPStan",
         "test": "Run the PHPUnit tests"
