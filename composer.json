@@ -58,7 +58,7 @@
             "@test"
         ],
         "stan": "vendor/bin/phpstan analyse -c phpstan.neon --no-interaction",
-        "test": "vendor/bin/simple-phpunit -d memory_limit=-1 --stop-on-failure --testdox"
+        "test": "vendor/bin/phpunit -d memory_limit=-1 --stop-on-failure --testdox"
     },
     "scripts-descriptions": {
         "cs": "Run php_codesniffer with PSR12 standard",
