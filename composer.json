@@ -19,6 +19,10 @@
     "require-dev": {
         "phpunit/phpunit": "^12.4.2"
     },
+    "suggest": {
+        "dama/doctrine-test-bundle": "Isolates database transactions for each test.",
+        "zenstruck/foundry": "Easily create fake objects for testing."
+    },
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
@@ -60,9 +64,5 @@
         "qa": "Run static analysis tools & test",
         "stan": "Run PHPStan",
         "test": "Run the PHPUnit tests"
-    },
-    "recommend": {
-        "dama/doctrine-test-bundle": "^8.4",
-        "zenstruck/foundry": "^2.7"
     }
 }
