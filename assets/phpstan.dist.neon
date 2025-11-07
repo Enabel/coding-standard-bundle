@@ -1,0 +1,26 @@
+parameters:
+    level: 8
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+    excludePaths:
+        - tests/bootstrap.php
+        - var/
+        - vendor/
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+        consoleApplicationLoader: tools/phpstan/console-application.php
+    scanDirectories:
+        - var/cache/dev/Symfony/Config
+    parallel:
+        maximumNumberOfProcesses: 4
+    doctrine:
+        objectManagerLoader: tools/phpstan/object-manager.php
+        allCollectionsSelectable: false
+    ignoreErrors:
+        -
+            identifier: missingType.generics
+            reportUnmatched: false

@@ -80,8 +80,8 @@ Add this block in your .env file
 
 ```dotenv
 ###> enabel/coding-standard-bundle ###
-MYSQL_VERSION=8
-PHP_VERSION=8.2
+MYSQL_VERSION=8.0
+PHP_VERSION=8.4
 DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=${MYSQL_VERSION}&charset=utf8mb4"
 ###< enabel/coding-standard-bundle ###
 ```

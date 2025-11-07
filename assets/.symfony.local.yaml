@@ -1,9 +1,7 @@
 http:
-    daemon: true
+  daemon: true
+  use_gzip: true
+
 workers:
-    messenger_consume_async:
-        cmd: ['symfony', 'console', 'messenger:consume', 'async']
-        watch: ['config', 'src', 'templates', 'vendor']
-    docker_compose_up:
-        cmd: ['docker compose', 'up', '-d']
-        watch: ['compose.yaml', 'compose.override.yaml']
+  docker_compose: ~
+  messenger_consume_async: ~

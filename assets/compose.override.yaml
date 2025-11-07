@@ -3,13 +3,11 @@ services:
   database:
     ports:
       - "3306"
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      timeout: 20s
-      retries: 10
-    volumes:
-      - ./docker/db/data:/var/lib/mysql:rw
   ###< doctrine/doctrine-bundle ###
+
+  redis:
+    ports:
+      - "6379"
 
   ###> symfony/mailer ###
   mailer:
@@ -32,26 +30,6 @@ services:
       PMA_HOST: database
       PMA_USER: root
 
-  phpqa:
-    image: jakzal/phpqa:php${PHP_VERSION:-8.2}
-    working_dir: /project
-    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
-    volumes:
-      - ./:/project
-    profiles:
-      - donotstart
-
-  redis:
-    image: redis:6
-    volumes:
-      - ./docker/redis/data:/data
-    ports:
-      - "6379"
-    healthcheck:
-      test: ["CMD", "redis-cli" ,"ping"]
-      timeout: 10s
-      retries: 10
-
   phpredisadmin:
     image: erikdubbelboer/phpredisadmin
     ports:
@@ -61,12 +39,3 @@ services:
     environment:
       REDIS_1_HOST: redis
       REDIS_1_NAME: Docker
-
-  typesense:
-    image: typesense/typesense:26.0
-    restart: on-failure
-    ports:
-      - "8108:8108"
-    volumes:
-      - ./docker/typesense-data:/data
-    command: '--data-dir /data --api-key=123 --enable-cors'

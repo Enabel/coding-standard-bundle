@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.0.0](https://github.com/enabel/coding-standard-bundle/tree/4.0.0) (2025-11-07)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.7...4.0.0)
+
 ## [3.0.7](https://github.com/enabel/coding-standard-bundle/tree/3.0.7) (2025-03-31)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.6...3.0.7)
