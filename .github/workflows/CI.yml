@@ -1,12 +1,13 @@
 name: CI
 
 on:
+  pull_request: ~
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
+
+env:
+  PHP_VERSION: "8.4"
+  PHP_EXTENSIONS: "mbstring, intl, pdo_mysql, opcache, zip, bcmath"
 
 jobs:
   build:
@@ -14,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Artifact (with permissions)
         uses: actions/cache@v4
@@ -25,14 +26,17 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-          tools: symfony, composer:v2
-          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: composer:v2,symfony-cli
+
+      - name: "Validate composer.json"
+        run: composer validate --strict
 
       - name: Install Composer dependencies
-        run: |
-          composer validate --no-check-publish
-          composer install --prefer-dist --no-progress --optimize-autoloader --no-interaction
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --prefer-dist --no-progress --no-interaction
 
       - name: Cleanup build
         run: |
@@ -44,7 +48,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Artifact (with permissions)
         uses: actions/cache@v4
@@ -55,12 +59,12 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-          tools: symfony
-          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: composer:v2,symfony-cli
 
-      - name: Security checker
-        run: symfony check:security
+      - name: "Security Check"
+        run: symfony security:check
 
   coding-standards:
     needs: build
@@ -68,7 +72,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Artifact (with permissions)
         uses: actions/cache@v4
@@ -79,15 +83,33 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-          tools: symfony
-          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: symfony-cli
+          ini-values: memory_limit=-1
 
-      - name: Run php_codesniffer with PSR12 standard
-        run: composer cs
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --prefer-dist --no-progress --optimize-autoloader --no-interaction
 
-      - name: Run PHPStan
-        run: composer stan
+      - name: Install phpstan
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-progress --no-scripts --prefer-dist
+          working-directory: tools/phpstan
+
+      - name: Run phpstan
+        run: tools/phpstan/vendor/bin/phpstan analyse
+
+      - name: Install php-cs-fixer
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-progress --no-scripts --prefer-dist
+          working-directory: tools/php-cs-fixer
+
+      - name: Run php-cs-fixer
+        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
 
   tests:
     needs: build
@@ -95,7 +117,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Artifact (with permissions)
         uses: actions/cache@v4
@@ -106,17 +128,28 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
-          tools: symfony
-          extensions: gd,json,iconv,intl,mbstring,pdo,pdo_mysql,xml,zip,curl,apcu
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: symfony-cli
           coverage: xdebug
+          ini-values: memory_limit=-1
 
-      - name: All Tests (unit & functional)
-        run: composer test
+      - name: Run PHPUnit
+        run: |
+          vendor/bin/phpunit \
+            --testdox \
+            --log-junit junit.xml \
+            --coverage-text \
+            --coverage-clover coverage.xml
 
-      - name: Publish coverage reports to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@v1
         with:
-          directory: coverage
+          file: junit.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}

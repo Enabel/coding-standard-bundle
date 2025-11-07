@@ -1,78 +1,58 @@
 #!/bin/bash
 
-# Change site root to /public
-sed -i 's|root /home/site/wwwroot;|root /home/site/wwwroot/public;|g' "/etc/nginx/sites-available/default"
+# Replace nginx config
+cp /home/site/wwwroot/.azure/nginx/default /etc/nginx/sites-available/default
 
-# Change nginx config to rewrite to index.php
-sed -i 's|index  index.php index.html index.htm hostingstart.html;|try_files $uri /index.php$is_args$args;|g' "/etc/nginx/sites-available/default"
+# Add health check
+cp /home/site/wwwroot/.azure/nginx/health.php /home/site/wwwroot/public/health.php
 
-# Remove custom error page
-sed -i 's|error_page   500 502 503 504  /50x.html;|#error_page   500 502 503 504  /50x.html;|' "/etc/nginx/sites-available/default"
+# Add symfony php.ini
+cp /home/site/wwwroot/.azure/php/php.ini /usr/local/etc/php/conf.d/symfony.ini
 
-# Force HTTPS
-sed -i 's|fastcgi_param HTTP_PROXY "";|fastcgi_param HTTP_PROXY "";\n\tfastcgi_param HTTPS "on";|' "/etc/nginx/sites-available/default"
-
-# Increase client_max_body_size
-sed -i 's|server {|server {\n\tclient_max_body_size 100M;|' "/etc/nginx/sites-available/default"
+# Add php-apcu [Background process]
+/home/site/wwwroot/.azure/apcu/install.sh
 
 # Symfony .env file [Need to redefine all the variables (release pipeline) here, because the messenger worker doesn't have access to the environment variables]
 echo "DATABASE_URL=mysql://$AZURE_MYSQL_USERNAME:$AZURE_MYSQL_PASSWORD@$AZURE_MYSQL_HOST:$AZURE_MYSQL_PORT/$AZURE_MYSQL_DBNAME" > /home/site/wwwroot/.env.local
 echo "REDIS_URL=rediss://$AZURE_REDIS_PASSWORD@$AZURE_REDIS_HOST:$AZURE_REDIS_PORT/$AZURE_REDIS_DATABASE" >> /home/site/wwwroot/.env.local
 echo "APP_ENV=prod" >> /home/site/wwwroot/.env.local
+echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID" >> /home/site/wwwroot/.env.local
+echo "AZURE_CLIENT_SECRET=$AZURE_CLIENT_SECRET" >> /home/site/wwwroot/.env.local
 echo "TRUSTED_PROXIES=$TRUSTED_PROXIES" >> /home/site/wwwroot/.env.local
 echo "TRUSTED_HOSTS=$TRUSTED_HOSTS" >> /home/site/wwwroot/.env.local
 echo "MAILER_DSN=$MAILER_DSN" >> /home/site/wwwroot/.env.local
 
 # Get composer
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
-# Compile .env file
+# Allow composer to run as root
+export COMPOSER_ALLOW_SUPERUSER=1;
+
+# Compile .env files for production use
 composer dump-env prod -nq -d /home/site/wwwroot
 
-# PHP.ini
-echo "date.timezone=Europe/Brussels" > /usr/local/etc/php/conf.d/symfony.ini
-echo "post_max_size=80M" >> /usr/local/etc/php/conf.d/symfony.ini
-echo "upload_max_filesize=50M" >> /usr/local/etc/php/conf.d/symfony.ini
-echo "memory_limit=2048M" >> /usr/local/etc/php/conf.d/symfony.ini
+# Download the latest version of Adminer
+wget -O /home/site/wwwroot/public/adminer.php https://www.adminer.org/latest.php
 
 # Restart nginx
-service nginx reload
+service nginx restart
 
-# Symfony cache
-php /home/site/wwwroot/bin/console cache:warmup
+# Move old cache
+mv /home/site/wwwroot/var/cache/prod /home/site/wwwroot/var/cache/old
 
-# Symfony cache pool (redis)
+# Symfony clear cache pools
 php /home/site/wwwroot/bin/console cache:pool:clear --all
+php /home/site/wwwroot/bin/console cache:clear
 
 # Symfony database
 php /home/site/wwwroot/bin/console doctrine:migrations:migrate --no-interaction
 
-# Symfony translations
-#php /home/site/wwwroot/bin/console translation:download
-
-# Symfony clear cache
-php /home/site/wwwroot/bin/console cache:clear
-
-# Symfony clear cache pools
-php /home/site/wwwroot/bin/console cache:pool:clear --all
-
 # Test mailer (generate a test email & warning to no allowed ip)
 php /home/site/wwwroot/bin/console mailer:test --from noreply@enabel.be --subject "Test mailer: $WEBSITE_SITE_NAME" --body "This is a test email from $WEBSITE_SITE_NAME" dl@enabel.be
 
-# Symfony recreate index
-#php /home/site/wwwroot/bin/console typesense:create -n
+# Add supervisor [Background process]
+/home/site/wwwroot/.azure/supervisor/install.sh
 
-# Symfony reindex data
-#php /home/site/wwwroot/bin/console typesense:import -n
-
-# Install cron
-apt update -qq
-apt install cron -yqq
-
-# Add a cron job to run a worker for messenger [async] every 15 minutes
-(crontab -l ; echo "15 */1 * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume async --time-limit=3500 --env=prod -vv >> /home/LogFiles/$(date +\%Y_\%m_\%d)_messenger_consume_async.log 2>&1") | crontab -
-(crontab -l ; echo "15 */1 * * * /usr/local/bin/php /home/site/wwwroot/bin/console messenger:consume scheduler_default --time-limit=3500 --env=prod -vv >> /home/LogFiles/$(date +\%Y_\%m_\%d)_messenger_consume_scheduler.log 2>&1") | crontab -
-
-# Start the cron service
-service cron start
+# Remove old cache
+rm -rf /home/site/wwwroot/var/cache/old

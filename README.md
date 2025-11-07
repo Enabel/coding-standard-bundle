@@ -9,23 +9,17 @@
 
 The bundle aims to provide basics Coding Standard and helper, including:
 
-- PHP Code Sniffer (PSR-12)
-- PHP Mess Detector
-- PHPStan
-- PHP Insight (Symfony)
-- PHP Copy/Paste Detector
-- Rector
-- PHPLoc
-- Twig Coding Standard
+- PHPCsFixer (PSR-12, Symfony)
+- PHPStan (Symfony, Doctrine, PHPUnit)
 - Linter
   - Twig
   - Yaml
-  - XLIFF
   - Symfony container
   - Symfony services
+  - Doctrine
   - Composer
 - Makefile
-- Docker (MySQL, Redis, Mailcatcher, PHPQA)
+- Docker (MySQL, Redis, Mailcatcher)
 
 ## Installation & usage
 
@@ -33,7 +27,7 @@ You can check docs [here](docs/index.md)
 
 ## Versions & dependencies
 
-The current version of the bundle works with Symfony 6.0+.
+The current version of the bundle works with Symfony 7.0+.
 The project follows SemVer.
 
 You can check the [changelog](CHANGELOG.md).
@@ -46,9 +40,8 @@ or [creating issues](https://github.com/enabel/coding-standard-bundle/issues)
 Note there are a few helpers to maintain code quality, that you can run using these commands:
 
 ```bash
-composer cs # Code style check
+composer csf # Code style check
 composer stan # Static analysis
-composer insight # Code analysis 
 composer test # Run tests
 ```
 
