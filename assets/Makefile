@@ -182,8 +182,8 @@ asset-audit: ## Run vulnerability audit against the importmap
 
 ## —— Translations 🏳️ ———————————————————————————————————————————————————
 translation-extract: composer-install ## Extract translation from the source code
-	$(SYMFONY) translation:extract --force --format yaml --sort ASC --as-tree 10 --no-fill --env=$(env) --domain messages en
-	$(SYMFONY) translation:extract --force --format yaml --sort ASC --as-tree 10 --no-fill --env=$(env) --domain messages fr
+	$(SYMFONY) translation:extract --force --format yaml --sort ASC --as-tree 10 --env=$(env) --domain messages en
+	$(SYMFONY) translation:extract --force --format yaml --sort ASC --as-tree 10 --env=$(env) --domain messages fr
 
 ## —— Tools 🧰 ———————————————————————————————————————————————————————————
 open: docker-up symfony-start ## Open the project webinterface
