@@ -10,10 +10,13 @@ return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
         '@PSR12' => true,
-        'array_syntax' => ['syntax' => 'short'],
         'declare_strict_types' => ['preserve_existing_declaration' => true],
+        'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => true,
         'no_unused_imports' => true,
+        'trailing_comma_in_multiline' => ['elements' => ['arrays', 'arguments', 'parameters']],
+        'phpdoc_align' => false,
+        'phpdoc_to_comment' => false, // Keep PHPStan type annotations
         'header_comment' => [
             'header' => <<<EOF
 This file is part of a Symfony Application built by Enabel.

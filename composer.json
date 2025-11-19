@@ -12,9 +12,9 @@
     "require": {
         "php": "^8.3",
         "ergebnis/composer-normalize": "^2.29",
-        "symfony/config": "^7.0",
-        "symfony/dependency-injection": "^7.0",
-        "symfony/framework-bundle": "^7.0"
+        "symfony/config": "^7.0|^8.0",
+        "symfony/dependency-injection": "^7.0|^8.0",
+        "symfony/framework-bundle": "^7.0|^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.4.2"
