@@ -1,0 +1,146 @@
+name: "CI: Symfony Application"
+
+on:
+  pull_request: ~
+  push:
+    branches: [ "main" ]
+
+env:
+  PHP_VERSION: "8.4"
+  PHP_EXTENSIONS: "mbstring, intl, pdo_mysql, opcache, zip, bcmath"
+
+jobs:
+  validate:
+    name: "Validate"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: composer:v2,symfony-cli
+
+      - name: "Validate composer.json"
+        run: composer validate --strict
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --prefer-dist --no-progress --no-interaction
+
+      - name: "Validate YAML"
+        run: symfony console lint:yaml config --parse-tags
+
+      - name: "Validate Twig"
+        run: symfony console lint:twig templates --no-debug
+
+      - name: "Validate Container"
+        run: symfony console lint:container
+
+      - name: "Validate Doctrine"
+        run: symfony console doctrine:schema:validate --skip-sync -v --no-interaction
+
+      - name: "Security Check"
+        run: symfony security:check
+
+  coding-standards:
+    name: "Coding Standards"
+    runs-on: ubuntu-latest
+    needs: [ validate ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: symfony-cli
+          ini-values: memory_limit=-1
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --prefer-dist --no-progress --optimize-autoloader --no-interaction
+
+      - name: Install phpstan
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-progress --no-scripts --prefer-dist
+          working-directory: tools/phpstan
+
+      - name: Run phpstan
+        run: tools/phpstan/vendor/bin/phpstan analyse
+
+      - name: Install php-cs-fixer
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-progress --no-scripts --prefer-dist
+          working-directory: tools/php-cs-fixer
+
+      - name: Run php-cs-fixer
+        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff
+
+  phpunit:
+    name: "PHPUnit"
+    runs-on: ubuntu-latest
+    needs: [validate]
+    services:
+      mysql:
+        image: mysql:8.0-oracle
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: symfony
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    env:
+      DATABASE_URL: mysql://root:@127.0.0.1:3306/symfony?serverVersion=8.0
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          tools: symfony-cli
+          coverage: pcov
+          ini-values: memory_limit=-1
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --prefer-dist --no-progress --no-interaction
+
+      - name: Init database
+        run: |
+          symfony console doctrine:database:create --if-not-exists
+          symfony console doctrine:migrations:migrate --quiet --no-interaction --allow-no-migration
+
+      - name: Run PHPUnit
+        run: |
+          vendor/bin/phpunit \
+            --testdox \
+            --log-junit junit.xml \
+            --coverage-text \
+            --coverage-clover coverage.xml
+
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@v1
+        with:
+          file: junit.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
