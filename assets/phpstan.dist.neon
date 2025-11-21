@@ -11,7 +11,7 @@ parameters:
     # Performance
     tmpDir: var/cache/phpstan
     parallel:
-            maximumNumberOfProcesses: 4
+        maximumNumberOfProcesses: 4
 
     # Inférence de types
     inferPrivatePropertyTypeFromConstructor: true

@@ -121,6 +121,12 @@ php-cs-fixer-fix: tools ## Run PHPCsFixer (PSR12, Symfony)
 php-stan: tools ## Run PHPStan
 	$(PHP) tools/phpstan/vendor/bin/phpstan analyse
 
+php-rector-dry: tools ## Run PHP Rector (dry-run)
+	$(PHP) tools/rector/vendor/bin/rector process --dry-run
+
+php-rector-fix: tools ## Run PHP Rector (fix)
+	$(PHP) tools/rector/vendor/bin/rector process
+
 ## —— CI: Linter 🧯 ————————————————————————————————————————————————————————————
 lint: lint-yaml lint-container lint-doctrine lint-composer lint-twig ## Run linters
 

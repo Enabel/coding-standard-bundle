@@ -1,12 +1,32 @@
 # Changelog
 
+## [4.1.0](https://github.com/enabel/coding-standard-bundle/tree/4.1.0) (2025-11-21)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/4.0.3...4.1.0)
+
+## [4.0.3](https://github.com/enabel/coding-standard-bundle/tree/4.0.3) (2025-11-20)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/4.0.2...4.0.3)
+
+## [4.0.2](https://github.com/enabel/coding-standard-bundle/tree/4.0.2) (2025-11-19)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/4.0.1...4.0.2)
+
 ## [4.0.1](https://github.com/enabel/coding-standard-bundle/tree/4.0.1) (2025-11-12)
 
 [Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/4.0.0...4.0.1)
 
 ## [4.0.0](https://github.com/enabel/coding-standard-bundle/tree/4.0.0) (2025-11-07)
 
-[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.7...4.0.0)
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.1.0...4.0.0)
+
+**Merged pull requests:**
+
+- 🧑‍💻 Keep it simple [\#10](https://github.com/Enabel/coding-standard-bundle/pull/10) ([damienlagae](https://github.com/damienlagae))
+
+## [3.1.0](https://github.com/enabel/coding-standard-bundle/tree/3.1.0) (2025-06-06)
+
+[Full Changelog](https://github.com/enabel/coding-standard-bundle/compare/3.0.7...3.1.0)
 
 ## [3.0.7](https://github.com/enabel/coding-standard-bundle/tree/3.0.7) (2025-03-31)
 

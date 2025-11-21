@@ -22,6 +22,7 @@
     },
     "suggest": {
         "dama/doctrine-test-bundle": "Isolates database transactions for each test.",
+        "phpro/grumphp": "Configure and run Git hooks to check code quality before committing.",
         "zenstruck/foundry": "Easily create fake objects for testing."
     },
     "minimum-stability": "stable",
