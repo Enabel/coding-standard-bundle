@@ -99,10 +99,12 @@ docker-down: compose.yaml ## Stop the docker hub
 tools: composer-install ## Install CI tools
 	$(COMPOSER) install -d tools/php-cs-fixer
 	$(COMPOSER) install -d tools/phpstan
+	$(COMPOSER) install -d tools/rector
 
 tools-pull: tools  ## Upgrade CI tools
 	$(COMPOSER) upgrade -d tools/php-cs-fixer
 	$(COMPOSER) upgrade -d tools/phpstan
+	$(COMPOSER) upgrade -d tools/rector
 
 ## —— CI: Tests ✅ —————————————————————————————————————————————————————————————
 tests: composer-install ## Run the PHPUnit tests
@@ -111,6 +113,8 @@ tests: composer-install ## Run the PHPUnit tests
 ## —— CI: Coding standards ✨ ——————————————————————————————————————————————————
 analyze: php-cs-fixer php-stan ## Analyze PHPCsFixer (PSR12, Symfony) & PHPStan
 fix: php-cs-fixer-fix ## Fix code with PHPCsFixer
+recommend: php-rector-dry ## Recommend code changes with PHP Rector (dry-run)
+refactor: php-rector-fix ## Refactor code with PHP Rector (fix)
 
 php-cs-fixer: tools ## Run PHPCsFixer (PSR12, Symfony)
 	$(PHP) tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run --diff

@@ -11,6 +11,7 @@ The bundle aims to provide basics Coding Standard and helper, including:
 
 - PHPCsFixer (PSR-12, Symfony)
 - PHPStan (Symfony, Doctrine, PHPUnit)
+- Rector (Symfony, Doctrine, PHPUnit, Twig)
 - Linter
   - Twig
   - Yaml
