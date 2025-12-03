@@ -24,5 +24,7 @@
     <file>/project/tests/</file>
 
     <exclude-pattern>/project/bin/.phpunit/*</exclude-pattern>
+    <exclude-pattern>/project/config/reference.php</exclude-pattern>
+
 
 </ruleset>
